@@ -1,0 +1,5893 @@
+{
+  "schemaVersion": "1.0.0",
+  "game": {
+    "title": "Tony Hawk's Underground 2",
+    "platform": "PC",
+    "region": "US retail"
+  },
+  "provenance": {
+    "source": "Decompiled QB scripts from Data/pre/qb_scripts.prx of a clean US PC install",
+    "scriptsDecompiled": 209,
+    "toolchain": "NeverScript (THUG2 fork) decompiler + prx/lzss unpacker",
+    "note": "No game assets are included. Only factual data: trick names, button inputs and base scores."
+  },
+  "knownGaps": [
+    {
+      "id": "grind-direction-order",
+      "confidence": "inferred",
+      "detail": "GrindTrickList appears once as data; the direction-to-family selection happens in THUG2.exe, not in any script. The nine families are certain, the direction each maps to is inferred from their contents and matches series convention."
+    },
+    {
+      "id": "specials-not-exclusive",
+      "confidence": "verified",
+      "detail": "Per-character specials are FACTORY DEFAULTS, not exclusivity. The Edit Tricks menu builds its list from the global ConfigurableTricks array filtered by TrickIsLocked, which is save-file unlock state and not character identity."
+    },
+    {
+      "id": "undefined-trick-ids",
+      "confidence": "verified",
+      "detail": "24 trick IDs are listed in alltricks.qb but have no definition anywhere in the game files, so they carry no name, animation or score. They appear to be cut content and are omitted.",
+      "ids": [
+        "Trick_1990Invert",
+        "Trick_3DSwimAir",
+        "Trick_AmericanHeroGrind",
+        "Trick_AssumePosition",
+        "Trick_BlastGrind",
+        "Trick_BootBurst",
+        "Trick_ChompOnThis",
+        "Trick_CrookedSkull",
+        "Trick_DaffyBrokenGrind",
+        "Trick_Flames",
+        "Trick_FlipKickDad",
+        "Trick_FlyingSquirrel",
+        "Trick_GuitarSlide",
+        "Trick_HeadStandManual",
+        "Trick_Jackass",
+        "Trick_MuskaManual",
+        "Trick_NollieFlipUnderflip",
+        "Trick_ReemoSlide",
+        "Trick_RowleyDarkSlide",
+        "Trick_Scanning",
+        "Trick_SprayPaintGrind",
+        "Trick_Thinkaboutitgrind",
+        "Trick_YeaRightSlide",
+        "Trick_flipflip"
+      ]
+    }
+  ],
+  "buttonMap": {
+    "flip": {
+      "playstation": "Square",
+      "xbox": "X",
+      "gamecube": "B"
+    },
+    "grab": {
+      "playstation": "Circle",
+      "xbox": "B",
+      "gamecube": "A"
+    },
+    "lip-grind": {
+      "playstation": "Triangle",
+      "xbox": "Y",
+      "gamecube": "Y"
+    }
+  },
+  "sharedBaseline": {
+    "description": "Default slot bindings identical for all 31 characters.",
+    "bindings": [
+      {
+        "name": "Pop Shove-It",
+        "input": {
+          "directions": [
+            "down"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "360 Shove-It",
+        "score": 100,
+        "category": "flip"
+      },
+      {
+        "name": "Varial Kickflip",
+        "input": {
+          "directions": [
+            "down-left"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "360 Flip",
+        "score": 300,
+        "category": "flip"
+      },
+      {
+        "name": "Varial Heelflip",
+        "input": {
+          "directions": [
+            "down-right"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "360 Heelflip",
+        "score": 300,
+        "category": "flip"
+      },
+      {
+        "name": "Kickflip",
+        "input": {
+          "directions": [
+            "left"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "Double Kickflip",
+        "score": 100,
+        "category": "flip"
+      },
+      {
+        "name": "Heelflip",
+        "input": {
+          "directions": [
+            "right"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "Double Heelflip",
+        "score": 100,
+        "category": "flip"
+      },
+      {
+        "name": "Hardflip",
+        "input": {
+          "directions": [
+            "up-left"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "360 Hardflip",
+        "score": 300,
+        "category": "flip"
+      },
+      {
+        "name": "Inward Heelflip",
+        "input": {
+          "directions": [
+            "up-right"
+          ],
+          "button": "flip"
+        },
+        "doubleTap": "360 Inward Heelflip",
+        "score": 350,
+        "category": "flip"
+      },
+      {
+        "name": "Benihana",
+        "input": {
+          "directions": [
+            "down-left"
+          ],
+          "button": "grab"
+        },
+        "doubleTap": "Sacktap",
+        "score": 300,
+        "category": "grab"
+      },
+      {
+        "name": "Melon",
+        "input": {
+          "directions": [
+            "left"
+          ],
+          "button": "grab"
+        },
+        "doubleTap": "Method",
+        "score": 300,
+        "category": "grab"
+      },
+      {
+        "name": "Nosegrab",
+        "input": {
+          "directions": [
+            "up"
+          ],
+          "button": "grab"
+        },
+        "doubleTap": "Rocket Air",
+        "score": 300,
+        "category": "grab"
+      },
+      {
+        "name": "Revert",
+        "input": null,
+        "slot": "Revert slot",
+        "category": "other"
+      }
+    ]
+  },
+  "trickSets": {
+    "CustomTricks": {
+      "label": "Custom Skater",
+      "variableBindings": [
+        {
+          "name": "Impossible",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Impossible",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 11,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie North",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie North Back Foot Flip",
+          "score": 169,
+          "category": "flip",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Sal Flip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "360 Sal Flip",
+          "score": 900,
+          "category": "flip",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Double Kickflip",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "flip",
+            "pressTwice": true
+          },
+          "doubleTap": "Triple Kickflip",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Tailgrab",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Tailgrab",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Stiffy",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Madonna",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Judo",
+          "score": 750,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 27,
+          "ofTotal": 31
+        },
+        {
+          "name": "Gymnast Plant",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 575,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "One Foot Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Varial Invert to Fakie",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 450,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Andrecht Invert",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "The Switcheroo",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Boneless",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 28,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "HawkTricks": {
+      "label": "Tony Hawk",
+      "variableBindings": [
+        {
+          "name": "Impossible",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Impossible",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 11,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie North",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie North Back Foot Flip",
+          "score": 169,
+          "category": "flip",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Sal Flip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "360 Sal Flip",
+          "score": 900,
+          "category": "flip",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Double Kickflip",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "flip",
+            "pressTwice": true
+          },
+          "doubleTap": "Triple Kickflip",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Tailgrab",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Tailgrab",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Stiffy",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Madonna",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Judo",
+          "score": 750,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 27,
+          "ofTotal": 31
+        },
+        {
+          "name": "Gymnast Plant",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 575,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "One Foot Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Varial Invert to Fakie",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 450,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Andrecht Invert",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "The Switcheroo",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Boneless",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 28,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "KostonTricks": {
+      "label": "Eric Koston",
+      "variableBindings": [
+        {
+          "name": "FS Shove-It",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "360 FS Shove-It",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 20,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Tailgrab",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Tailgrab",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Stiffy",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Crossbone",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "CrookedCop",
+          "score": 425,
+          "category": "grab",
+          "sharedByCharacters": 19,
+          "ofTotal": 31
+        },
+        {
+          "name": "Mute",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Seatbelt Air",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 19,
+          "ofTotal": 31
+        },
+        {
+          "name": "Rock to Fakie",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Blunt to Fakie",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Axle Stall",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 400,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Nosepick",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Disaster",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Boneless",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 28,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "MargeraTricks": {
+      "label": "Bam Margera",
+      "variableBindings": [
+        {
+          "name": "FS Shove-It",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "360 FS Shove-It",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 20,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy Nosebone",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Del Mar Indy",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Cannonball",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Fingerflip Cannonball",
+          "score": 250,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Wrap Around",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Body Wrap",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Rock to Fakie",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Blunt to Fakie",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Axle Stall",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 400,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Nosepick",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Disaster",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Beanplant",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 3,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "MullenTricks": {
+      "label": "Rodney Mullen",
+      "variableBindings": [
+        {
+          "name": "Impossible",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Impossible",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 11,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy Nosebone",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Del Mar Indy",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Cannonball",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Fingerflip Cannonball",
+          "score": 250,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Wrap Around",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Body Wrap",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Rock to Fakie",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Blunt to Fakie",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Axle Stall",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 400,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Nosepick",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Disaster",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Beanplant",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 3,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "MuskaTricks": {
+      "label": "Chad Muska",
+      "variableBindings": [
+        {
+          "name": "FS Shove-It",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "360 FS Shove-It",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 20,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Tailgrab",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Tailgrab",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Stiffy",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Crossbone",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "CrookedCop",
+          "score": 425,
+          "category": "grab",
+          "sharedByCharacters": 19,
+          "ofTotal": 31
+        },
+        {
+          "name": "Mute",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Seatbelt Air",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 19,
+          "ofTotal": 31
+        },
+        {
+          "name": "Rock to Fakie",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Blunt to Fakie",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Axle Stall",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 400,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Nosepick",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Disaster",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 4,
+          "ofTotal": 31
+        },
+        {
+          "name": "Boneless",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 28,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "BurnquistTricks": {
+      "label": "Bob Burnquist",
+      "variableBindings": [
+        {
+          "name": "Impossible",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Impossible",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 11,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy Nosebone",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Del Mar Indy",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Cannonball",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Fingerflip Cannonball",
+          "score": 250,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Wrap Around",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Body Wrap",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 27,
+          "ofTotal": 31
+        },
+        {
+          "name": "Blunt to Fakie",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Disaster",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Axle Stall",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 400,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "Eggplant",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Varial Invert to Fakie",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 450,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "One Foot Invert",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Beanplant",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 3,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "VallelyTricks": {
+      "label": "Mike Vallely",
+      "variableBindings": [
+        {
+          "name": "Impossible",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Impossible",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 11,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy Nosebone",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Del Mar Indy",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Cannonball",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Fingerflip Cannonball",
+          "score": 250,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Wrap Around",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Body Wrap",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 6,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 27,
+          "ofTotal": 31
+        },
+        {
+          "name": "Gymnast Plant",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 575,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "One Foot Invert",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Varial Invert to Fakie",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 450,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "FS Noseblunt",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Andrecht Invert",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "The Switcheroo",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 9,
+          "ofTotal": 31
+        },
+        {
+          "name": "Boneless",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 28,
+          "ofTotal": 31
+        }
+      ]
+    },
+    "PedTricks": {
+      "label": "Sheckler and guests",
+      "variableBindings": [
+        {
+          "name": "FS Shove-It",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "360 FS Shove-It",
+          "score": 100,
+          "category": "flip",
+          "sharedByCharacters": 20,
+          "ofTotal": 31
+        },
+        {
+          "name": "Ollie Airwalk",
+          "input": {
+            "directions": [
+              "down",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Ollie Airwalk Late Shove-it",
+          "score": 500,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Fingerflip",
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "flip"
+          },
+          "doubleTap": "Double Fingerflip",
+          "score": 700,
+          "category": "flip",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Tailgrab",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Tailgrab",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Airwalk",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Christ Air",
+          "score": 450,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Indy",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Stiffy",
+          "score": 300,
+          "category": "grab",
+          "sharedByCharacters": 25,
+          "ofTotal": 31
+        },
+        {
+          "name": "Crossbone",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "CrookedCop",
+          "score": 425,
+          "category": "grab",
+          "sharedByCharacters": 19,
+          "ofTotal": 31
+        },
+        {
+          "name": "Mute",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "Seatbelt Air",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 19,
+          "ofTotal": 31
+        },
+        {
+          "name": "Invert",
+          "input": {
+            "directions": [
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 27,
+          "ofTotal": 31
+        },
+        {
+          "name": "Blunt to Fakie",
+          "input": {
+            "directions": [
+              "down-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "BS Boneless",
+          "input": {
+            "directions": [
+              "down-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Disaster",
+          "input": {
+            "directions": [
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 600,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Axle Stall",
+          "input": {
+            "directions": [
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 400,
+          "category": "lip",
+          "sharedByCharacters": 22,
+          "ofTotal": 31
+        },
+        {
+          "name": "Eggplant",
+          "input": {
+            "directions": [
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 550,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Varial Invert to Fakie",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 450,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "One Foot Invert",
+          "input": {
+            "directions": [
+              "up-right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 500,
+          "category": "lip",
+          "sharedByCharacters": 18,
+          "ofTotal": 31
+        },
+        {
+          "name": "Boneless",
+          "input": null,
+          "slot": "Jump / boneless slot",
+          "score": 250,
+          "category": "jump",
+          "sharedByCharacters": 28,
+          "ofTotal": 31
+        }
+      ]
+    }
+  },
+  "characters": [
+    {
+      "name": "Custom Skater",
+      "trickSet": "CustomTricks",
+      "specials": [
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        },
+        {
+          "name": "Kickflip Underflip",
+          "input": {
+            "directions": [
+              "up",
+              "right"
+            ],
+            "button": "flip"
+          },
+          "score": 1750,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Tailblock Slide",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "One Wheel Nosemanual",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4100,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Secret Skaters"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tony Hawk",
+      "trickSet": "HawkTricks",
+      "specials": [
+        {
+          "name": "360 Varial McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "grab"
+          },
+          "score": 5750,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "THPS Hawk",
+            "The Hand",
+            "C.o.D. Soldier"
+          ]
+        },
+        {
+          "name": "Indy 900",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 11000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "THPS Hawk"
+          ]
+        },
+        {
+          "name": "Endless Handflip",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 1200,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "THPS Hawk"
+          ]
+        },
+        {
+          "name": "Surfer",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "THPS Hawk"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bob Burnquist",
+      "trickSet": "BurnquistTricks",
+      "specials": [
+        {
+          "name": "Shifty Shifty",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 2500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Samba Flip",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 1850,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Darkside Japan",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 1200,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Boardslide Bodyvarial",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Eric Koston",
+      "trickSet": "KostonTricks",
+      "specials": [
+        {
+          "name": "Fandangle",
+          "input": {
+            "directions": [
+              "up",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Yeah Right",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 3100,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Endless Kickflip",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 1200,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "No Problem 900",
+          "input": {
+            "directions": [
+              "right",
+              "up"
+            ],
+            "button": "grab"
+          },
+          "score": 1750,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Bam Margera",
+      "trickSet": "MargeraTricks",
+      "specials": [
+        {
+          "name": "Bam Bend Air",
+          "input": {
+            "directions": [
+              "up",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 1300,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "BAM",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 6750,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Grind N Barf",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Chainsaw Rocker Grind",
+          "input": {
+            "directions": [
+              "down",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Rodney Mullen",
+      "trickSet": "MullenTricks",
+      "specials": [
+        {
+          "name": "5-0 Fingerflip Nosegrind",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Rodney Primo",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "HalfCab UnderFlip",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "flip"
+          },
+          "score": 3500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Primo Spin",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Chad Muska",
+      "trickSet": "MuskaTricks",
+      "specials": [
+        {
+          "name": "Moonwalk Five-O",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Rusty Slide Manual",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Muska 5-0 Flames",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Worm Grind",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Ryan Sheckler",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Swimming with Sharks",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Sheckler Grab",
+          "input": {
+            "directions": [
+              "up",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 2000,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        },
+        {
+          "name": "Primo",
+          "input": {
+            "directions": [
+              "down",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4000,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Mike Vallely",
+      "trickSet": "VallelyTricks",
+      "specials": [
+        {
+          "name": "Flip 2 Switch",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Flamingo",
+          "input": {
+            "directions": [
+              "down",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 2000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Wee-Man",
+            "Eric Sparrow"
+          ]
+        },
+        {
+          "name": "Around The World",
+          "input": {
+            "directions": [
+              "up",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 7250,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Boomerang",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Wee-Man",
+      "trickSet": "VallelyTricks",
+      "specials": [
+        {
+          "name": "Elbow Smash",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Eric Sparrow"
+          ]
+        },
+        {
+          "name": "HeadKick BackFlip",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "grab"
+          },
+          "score": 2550,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Flamingo",
+          "input": {
+            "directions": [
+              "down",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 2000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Mike Vallely",
+            "Eric Sparrow"
+          ]
+        },
+        {
+          "name": "Slam Spinner",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 3500,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Eric Sparrow",
+            "Secret Skaters"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ben Franklin",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Franklin Grind",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jesse James - Vehicle",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Hot Rod",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4250,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Jesse James - Skater"
+          ]
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jesse James - Skater",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Hot Rod",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4250,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Jesse James - Vehicle"
+          ]
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bull Fighter",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Espana Sword Slide",
+          "input": {
+            "directions": [
+              "down",
+              "left"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Steve-O - Vehicle",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Bite Board",
+          "input": {
+            "directions": [
+              "left",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Steve-O - Skater"
+          ]
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Steve-O - Skater",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Bite Board",
+          "input": {
+            "directions": [
+              "left",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Steve-O - Vehicle"
+          ]
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Graffiti Tagger",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Double Fistin",
+          "input": {
+            "directions": [
+              "down",
+              "left"
+            ],
+            "button": "grab"
+          },
+          "score": 1450,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Paulie - Vehicle",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Paulie Butt Manual",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Paulie - Skater"
+          ]
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Paulie - Skater",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Paulie Butt Manual",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Paulie - Vehicle"
+          ]
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shrimp Vendor",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Rotisserie",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 2500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Minikart Driver",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nigel Beaverhausen",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Beaver Blast",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "flip"
+          },
+          "score": 1000,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Jester",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jester",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "Manual Entertainer",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "VooDoo",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VooDoo",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "Chainsaw Skater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chainsaw Skater",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 5000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater",
+            "Ryan Sheckler",
+            "Ben Franklin",
+            "Jesse James - Vehicle",
+            "Jesse James - Skater",
+            "Bull Fighter",
+            "Steve-O - Vehicle",
+            "Steve-O - Skater",
+            "Graffiti Tagger",
+            "Paulie - Vehicle",
+            "Paulie - Skater",
+            "Shrimp Vendor",
+            "Minikart Driver",
+            "Nigel Beaverhausen",
+            "Jester",
+            "VooDoo"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "THPS Hawk",
+      "trickSet": "HawkTricks",
+      "specials": [
+        {
+          "name": "360 Varial McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "grab"
+          },
+          "score": 5750,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Tony Hawk",
+            "The Hand",
+            "C.o.D. Soldier"
+          ]
+        },
+        {
+          "name": "Indy 900",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 11000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Tony Hawk"
+          ]
+        },
+        {
+          "name": "Endless Handflip",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 1200,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Tony Hawk"
+          ]
+        },
+        {
+          "name": "Surfer",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Tony Hawk"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Hand",
+      "trickSet": "HawkTricks",
+      "specials": [
+        {
+          "name": "360 Varial McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "grab"
+          },
+          "score": 5750,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Tony Hawk",
+            "THPS Hawk",
+            "C.o.D. Soldier"
+          ]
+        },
+        {
+          "name": "The Bird",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Shrek",
+      "trickSet": "HawkTricks",
+      "specials": [
+        {
+          "name": "Board Snap",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "grab"
+          },
+          "score": 2750,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Wax Slide",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "C.o.D. Soldier",
+      "trickSet": "HawkTricks",
+      "specials": [
+        {
+          "name": "360 Varial McTwist",
+          "input": {
+            "directions": [
+              "right",
+              "left"
+            ],
+            "button": "grab"
+          },
+          "score": 5750,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Tony Hawk",
+            "THPS Hawk",
+            "The Hand"
+          ]
+        },
+        {
+          "name": "Salute",
+          "input": {
+            "directions": [
+              "right",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 1000,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Hero",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        }
+      ]
+    },
+    {
+      "name": "Eric Sparrow",
+      "trickSet": "VallelyTricks",
+      "specials": [
+        {
+          "name": "Elbow Smash",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": null,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Wee-Man"
+          ]
+        },
+        {
+          "name": "Running Manual",
+          "input": {
+            "directions": [
+              "down",
+              "up"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Flamingo",
+          "input": {
+            "directions": [
+              "down",
+              "right"
+            ],
+            "button": "grab"
+          },
+          "score": 2000,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Mike Vallely",
+            "Wee-Man"
+          ]
+        },
+        {
+          "name": "Slam Spinner",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 3500,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Wee-Man",
+            "Secret Skaters"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Secret Skaters",
+      "trickSet": "PedTricks",
+      "specials": [
+        {
+          "name": "1-2-3-4",
+          "input": {
+            "directions": [
+              "left",
+              "down"
+            ],
+            "button": "grab"
+          },
+          "score": 2500,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "The 900",
+          "input": {
+            "directions": [
+              "right",
+              "up"
+            ],
+            "button": "grab"
+          },
+          "score": 9000,
+          "signature": true,
+          "alsoFactoryDefaultFor": []
+        },
+        {
+          "name": "Slam Spinner",
+          "input": {
+            "directions": [
+              "up",
+              "down"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 3500,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Wee-Man",
+            "Eric Sparrow"
+          ]
+        },
+        {
+          "name": "One Wheel Nosemanual",
+          "input": {
+            "directions": [
+              "left",
+              "right"
+            ],
+            "button": "lip-grind"
+          },
+          "score": 4100,
+          "signature": false,
+          "alsoFactoryDefaultFor": [
+            "Custom Skater"
+          ]
+        }
+      ]
+    }
+  ],
+  "grinds": {
+    "note": "Grinds are directional but are not listed in the Edit Tricks menu. Frontside, backside and 180 variants are chosen from stance and approach angle.",
+    "families": [
+      {
+        "direction": null,
+        "gives": [
+          "Boardslide",
+          "Lipslide",
+          "50-50"
+        ]
+      },
+      {
+        "direction": "up",
+        "gives": [
+          "Nosegrind"
+        ]
+      },
+      {
+        "direction": "down",
+        "gives": [
+          "5-0"
+        ]
+      },
+      {
+        "direction": "left",
+        "gives": [
+          "Boardslide",
+          "Lipslide",
+          "Tailslide",
+          "Noseslide"
+        ]
+      },
+      {
+        "direction": "right",
+        "gives": [
+          "Boardslide",
+          "Lipslide",
+          "Noseslide",
+          "Tailslide"
+        ]
+      },
+      {
+        "direction": "up-left",
+        "gives": [
+          "Crooked"
+        ]
+      },
+      {
+        "direction": "up-right",
+        "gives": [
+          "Crooked"
+        ]
+      },
+      {
+        "direction": "down-left",
+        "gives": [
+          "Smith",
+          "Feeble"
+        ]
+      },
+      {
+        "direction": "down-right",
+        "gives": [
+          "Feeble",
+          "Smith"
+        ]
+      }
+    ],
+    "tapAgain": [
+      {
+        "direction": "up-right",
+        "upgradesTo": "Crail Slide"
+      },
+      {
+        "direction": "down-right",
+        "upgradesTo": "Darkslide"
+      },
+      {
+        "direction": "down-left",
+        "upgradesTo": "Double Blunt Slide"
+      },
+      {
+        "direction": "up-left",
+        "upgradesTo": "Hang Ten Nosegrind"
+      },
+      {
+        "direction": "up",
+        "upgradesTo": "Nosegrind to Pivot"
+      },
+      {
+        "direction": "right",
+        "upgradesTo": "Salad"
+      },
+      {
+        "direction": "left",
+        "upgradesTo": "Hurricane"
+      },
+      {
+        "direction": "down",
+        "upgradesTo": "5-0 Overturn"
+      }
+    ],
+    "doubleTapDirection": [
+      {
+        "directions": [
+          "up",
+          "up"
+        ],
+        "name": "Nosebluntslide"
+      },
+      {
+        "directions": [
+          "down",
+          "down"
+        ],
+        "name": "Bluntslide"
+      }
+    ],
+    "allNames": [
+      "360 Shove-It NoseGrind",
+      "5-0 Fingerflip Nosegrind",
+      "5050 Switcheroo",
+      "BS 5-0",
+      "BS 5-0 Overturn",
+      "BS 50-50",
+      "BS Bluntslide",
+      "BS Boardslide",
+      "BS Chainsaw Rocker",
+      "BS Coffin",
+      "BS Crail Slide",
+      "BS Crooked",
+      "BS Darkslide",
+      "BS Espana Sword Slide",
+      "BS Fandangle",
+      "BS Feeble",
+      "BS Hero",
+      "BS Hurricane",
+      "BS Lip Bodyvarial",
+      "BS Lipslide",
+      "BS Muska 5-0 Flames",
+      "BS NoseSlide LipSlide",
+      "BS Nosebluntslide",
+      "BS Nosegrind",
+      "BS Noseslide",
+      "BS One Foot Smith",
+      "BS Overcrook",
+      "BS Salad",
+      "BS Shark",
+      "BS Smith",
+      "BS Tailslide",
+      "BS TheBird",
+      "BS Waxslide",
+      "BS Worm",
+      "Big Hitter II",
+      "Bite Board",
+      "Crook BigSpinFlip Switch FS Crook",
+      "Crooks DarkSlide",
+      "Daffy Grind",
+      "Darkslide Handstand",
+      "Double Blunt Slide",
+      "Elbow Smash",
+      "FS 5-0",
+      "FS 5-0 Overturn",
+      "FS 50-50",
+      "FS Bluntslide",
+      "FS Board Bodyvarial",
+      "FS Boardslide",
+      "FS Chainsaw Rocker",
+      "FS Coffin",
+      "FS Crail Slide",
+      "FS Crooked",
+      "FS Darkslide",
+      "FS Espana Sword Slide",
+      "FS Fandangle",
+      "FS Feeble",
+      "FS Hero",
+      "FS Hurricane",
+      "FS Lipslide",
+      "FS Muska 5-0 Flames",
+      "FS Nosebluntslide",
+      "FS Nosegrind",
+      "FS Noseslide",
+      "FS Noseslide LipSlide",
+      "FS One Foot Smith",
+      "FS Overcrook",
+      "FS Salad",
+      "FS Shark",
+      "FS Smith",
+      "FS Tailslide",
+      "FS TheBird",
+      "FS Waxslide",
+      "FS Worm",
+      "Franklin Grind!!!",
+      "Grind N Barf",
+      "Hang Ten Nosegrind",
+      "Moonwalk Five-O",
+      "Nollie 360flip Crook",
+      "Nosegrind to Pivot",
+      "One Foot Darkslide",
+      "Overcrook BigSpinFlip Overcrook",
+      "Primo Handstand",
+      "Rodney Primo",
+      "S.U.I Grind",
+      "Stupid Grind",
+      "Tailblock Slide"
+    ]
+  },
+  "manuals": {
+    "note": "Manuals are not in the Edit Tricks menu either. Enter with two directions, then press pairs of face buttons while balancing. Branches chain indefinitely.",
+    "entry": [
+      {
+        "name": "Manual",
+        "directions": [
+          "up",
+          "down"
+        ]
+      },
+      {
+        "name": "Nose Manual",
+        "directions": [
+          "down",
+          "up"
+        ]
+      }
+    ],
+    "branchesFromAnyManual": [
+      {
+        "name": "Anti Casper",
+        "buttons": [
+          "flip",
+          "grab"
+        ]
+      },
+      {
+        "name": "Casper",
+        "buttons": [
+          "flip",
+          "lip-grind"
+        ]
+      },
+      {
+        "name": "To Rail",
+        "buttons": [
+          "grab",
+          "flip"
+        ]
+      },
+      {
+        "name": "One Foot Manual",
+        "buttons": [
+          "grab",
+          "lip-grind"
+        ]
+      },
+      {
+        "name": "One Foot Nose Manual",
+        "buttons": [
+          "grab",
+          "lip-grind"
+        ]
+      },
+      {
+        "name": "HandStand",
+        "buttons": [
+          "grab",
+          "grab"
+        ]
+      },
+      {
+        "name": "Pogo",
+        "buttons": [
+          "lip-grind",
+          "lip-grind"
+        ]
+      },
+      {
+        "name": "Truckstand",
+        "buttons": [
+          "lip-grind",
+          "flip"
+        ]
+      },
+      {
+        "name": "Switch Foot Pogo",
+        "buttons": [
+          "lip-grind",
+          "grab"
+        ]
+      },
+      {
+        "name": "Spacewalk",
+        "directions": [
+          "left",
+          "right"
+        ],
+        "buttons": [
+          "flip"
+        ]
+      }
+    ],
+    "branchesFromManual": [
+      {
+        "name": "One Foot Manual",
+        "buttons": [
+          "grab",
+          "lip-grind"
+        ]
+      },
+      {
+        "name": "Pivot",
+        "shoulder": "R2"
+      },
+      {
+        "name": "360 Fingerflip",
+        "buttons": [
+          "flip",
+          "flip"
+        ]
+      }
+    ],
+    "branchesFromNoseManual": [
+      {
+        "name": "One Foot Nose Manual",
+        "buttons": [
+          "grab",
+          "lip-grind"
+        ]
+      },
+      {
+        "name": "Nose Pivot",
+        "shoulder": "R2"
+      },
+      {
+        "name": "Half Cab Impossible",
+        "buttons": [
+          "flip",
+          "flip"
+        ]
+      }
+    ]
+  },
+  "assignableTricks": [
+    {
+      "name": "1-2-3-4",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_1234"
+    },
+    {
+      "name": "180 Varial",
+      "category": "flip",
+      "score": 700,
+      "doubleTap": "360 Varial",
+      "internalId": "Trick_180Varial"
+    },
+    {
+      "name": "360 Fingerflip",
+      "category": "manual",
+      "score": 750,
+      "doubleTap": null,
+      "internalId": "Trick_360FlipNoseManual"
+    },
+    {
+      "name": "360 Flip Tail Grab",
+      "category": "special",
+      "score": 1750,
+      "doubleTap": null,
+      "internalId": "Trick_FSFlipOneFootTailGrab"
+    },
+    {
+      "name": "360 Ghetto Bird",
+      "category": "special",
+      "score": 3500,
+      "doubleTap": null,
+      "internalId": "Trick_GhettoBird"
+    },
+    {
+      "name": "360 Shove-It NoseGrind",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_360ShovitNoseGrind"
+    },
+    {
+      "name": "360 Varial",
+      "category": "other",
+      "score": 900,
+      "doubleTap": null,
+      "internalId": "Trick_360Varial"
+    },
+    {
+      "name": "360 Varial Heelflip Lien",
+      "category": "special",
+      "score": 3500,
+      "doubleTap": null,
+      "internalId": "Trick_540varielheelfliplien"
+    },
+    {
+      "name": "360 Varial McTwist",
+      "category": "special",
+      "score": 5750,
+      "doubleTap": null,
+      "internalId": "Trick_360VarialMcTwist"
+    },
+    {
+      "name": "5-0 Fingerflip Nosegrind",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_50FingerFlip"
+    },
+    {
+      "name": "5050 Switcheroo",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_FiftyFiftySwitcheroo"
+    },
+    {
+      "name": "540 Flip",
+      "category": "special",
+      "score": 2250,
+      "doubleTap": null,
+      "internalId": "Trick_540Flip"
+    },
+    {
+      "name": "540 TailWhip",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_540TailWhip"
+    },
+    {
+      "name": "Ahhh yeahhh!",
+      "category": "special",
+      "score": 4000,
+      "doubleTap": null,
+      "internalId": "Trick_DanceParty"
+    },
+    {
+      "name": "Airwalk",
+      "category": "grab",
+      "score": 450,
+      "doubleTap": "Christ Air",
+      "internalId": "Trick_Airwalk"
+    },
+    {
+      "name": "Andrecht Invert",
+      "category": "lip",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_AndrectInvert"
+    },
+    {
+      "name": "Anti Casper",
+      "category": "manual",
+      "score": 1100,
+      "doubleTap": null,
+      "internalId": "Trick_AntiCasper"
+    },
+    {
+      "name": "Around The World",
+      "category": "special",
+      "score": 7250,
+      "doubleTap": null,
+      "internalId": "Trick_Around"
+    },
+    {
+      "name": "Axle Stall",
+      "category": "lip",
+      "score": 400,
+      "doubleTap": null,
+      "internalId": "Trick_AxleStall"
+    },
+    {
+      "name": "Back Foot Heelflip",
+      "category": "flip",
+      "score": 150,
+      "doubleTap": "Double Back Foot Heelflip",
+      "internalId": "Trick_BackfootHeelflip"
+    },
+    {
+      "name": "Back Foot Kickflip",
+      "category": "flip",
+      "score": 150,
+      "doubleTap": "Double Back Foot Flip",
+      "internalId": "Trick_BackfootKickflip"
+    },
+    {
+      "name": "Back Foot Shove-It",
+      "category": "flip",
+      "score": 150,
+      "doubleTap": "360 Back Foot Shove-It",
+      "internalId": "Trick_BackfootShoveIt"
+    },
+    {
+      "name": "Back Spin Air",
+      "category": "special",
+      "score": 3500,
+      "doubleTap": null,
+      "internalId": "Trick_BreakIn"
+    },
+    {
+      "name": "BAM",
+      "category": "special",
+      "score": 6750,
+      "doubleTap": null,
+      "internalId": "Trick_BamLip"
+    },
+    {
+      "name": "Bam Bend Air",
+      "category": "special",
+      "score": 1300,
+      "doubleTap": null,
+      "internalId": "Trick_BamBendAir"
+    },
+    {
+      "name": "Barrel Roll",
+      "category": "flip",
+      "score": 800,
+      "doubleTap": null,
+      "internalId": "Trick_BarrelRoll"
+    },
+    {
+      "name": "Beanplant",
+      "category": "jump",
+      "score": 250,
+      "doubleTap": null,
+      "internalId": "Trick_Beanplant"
+    },
+    {
+      "name": "Beaver Blast",
+      "category": "special",
+      "score": 1000,
+      "doubleTap": null,
+      "internalId": "Trick_BeaverBlast"
+    },
+    {
+      "name": "Benihana",
+      "category": "grab",
+      "score": 300,
+      "doubleTap": "Sacktap",
+      "internalId": "Trick_Benihana"
+    },
+    {
+      "name": "Big Hitter II",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_BigHitter"
+    },
+    {
+      "name": "Bigspin Flip",
+      "category": "flip",
+      "score": 500,
+      "doubleTap": "360 Flip",
+      "internalId": "Trick_BigSpinFlip"
+    },
+    {
+      "name": "BigSpin Shifty",
+      "category": "special",
+      "score": 2000,
+      "doubleTap": null,
+      "internalId": "Trick_BigSpinShifty"
+    },
+    {
+      "name": "Bite Board",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_BiteBoard"
+    },
+    {
+      "name": "Blunt to Fakie",
+      "category": "lip",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_Blunt"
+    },
+    {
+      "name": "Board Snap",
+      "category": "special",
+      "score": 2750,
+      "doubleTap": null,
+      "internalId": "Trick_BoardSnap"
+    },
+    {
+      "name": "Boardslide Bodyvarial",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_RockNRollSwitch"
+    },
+    {
+      "name": "Body Wrap",
+      "category": "other",
+      "score": 600,
+      "doubleTap": null,
+      "internalId": "Trick_BetweenTheLegs"
+    },
+    {
+      "name": "Boneless",
+      "category": "jump",
+      "score": 250,
+      "doubleTap": null,
+      "internalId": "Trick_Boneless"
+    },
+    {
+      "name": "Boomerang",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_Boomerang"
+    },
+    {
+      "name": "BS Bigspin",
+      "category": "flip",
+      "score": 500,
+      "doubleTap": "540 Shove-It",
+      "internalId": "Trick_FSBigSpin"
+    },
+    {
+      "name": "BS Boneless",
+      "category": "lip",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_BSFootplant"
+    },
+    {
+      "name": "BS Flip",
+      "category": "flip",
+      "score": 500,
+      "doubleTap": "360 Flip",
+      "internalId": "Trick_BSFlip"
+    },
+    {
+      "name": "Cannonball",
+      "category": "grab",
+      "score": 250,
+      "doubleTap": "Fingerflip Cannonball",
+      "internalId": "Trick_Cannonball"
+    },
+    {
+      "name": "Casper",
+      "category": "manual",
+      "score": 1100,
+      "doubleTap": null,
+      "internalId": "Trick_Casper"
+    },
+    {
+      "name": "Casper Flip 360 Flip",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_AirCasperFlip"
+    },
+    {
+      "name": "Casper Handstand",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": "Handflip",
+      "internalId": "Trick_HandStandCasper"
+    },
+    {
+      "name": "Chainsaw Rocker Grind",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Bam_Chainsaw"
+    },
+    {
+      "name": "Christ Air",
+      "category": "other",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_ChristAir"
+    },
+    {
+      "name": "Coffin",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Coffin"
+    },
+    {
+      "name": "Crail Grab",
+      "category": "grab",
+      "score": 350,
+      "doubleTap": "TuckKnee",
+      "internalId": "Trick_Crail"
+    },
+    {
+      "name": "Crook BigSpinFlip Crook",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_CrookedBigSpinFlip"
+    },
+    {
+      "name": "CrookedCop",
+      "category": "other",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_CrookedCop"
+    },
+    {
+      "name": "Crooks DarkSlide",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_HCNHDF"
+    },
+    {
+      "name": "Crossbone",
+      "category": "grab",
+      "score": 425,
+      "doubleTap": "CrookedCop",
+      "internalId": "Trick_Crossbone"
+    },
+    {
+      "name": "Darkside Japan",
+      "category": "special",
+      "score": 1200,
+      "doubleTap": null,
+      "internalId": "Trick_DarksideJapan"
+    },
+    {
+      "name": "Darkslide Handstand",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_RowleyDarkSlideHandStand"
+    },
+    {
+      "name": "Del Mar Indy",
+      "category": "other",
+      "score": 400,
+      "doubleTap": null,
+      "internalId": "Trick_DelMarIndy"
+    },
+    {
+      "name": "Disaster",
+      "category": "lip",
+      "score": 600,
+      "doubleTap": null,
+      "internalId": "Trick_Disaster"
+    },
+    {
+      "name": "Dont Feed Phil",
+      "category": "special",
+      "score": 1800,
+      "doubleTap": null,
+      "internalId": "Trick_HoagieGrab"
+    },
+    {
+      "name": "Double Blunt Slide",
+      "category": "other",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_DoubleBluntSlide"
+    },
+    {
+      "name": "Double Fistin",
+      "category": "special",
+      "score": 1450,
+      "doubleTap": null,
+      "internalId": "Trick_DoubleFistin"
+    },
+    {
+      "name": "Double Kickflip Madonna",
+      "category": "special",
+      "score": 2250,
+      "doubleTap": null,
+      "internalId": "Trick_2KickMadonnaFlip"
+    },
+    {
+      "name": "Double Kickflip Varial Indy",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_DoubleKFindy"
+    },
+    {
+      "name": "Eggplant",
+      "category": "lip",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_Eggplant"
+    },
+    {
+      "name": "Elbow Smash",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_ElbowSmash"
+    },
+    {
+      "name": "Endless Handflip",
+      "category": "special",
+      "score": 1200,
+      "doubleTap": null,
+      "internalId": "Trick_EndlessHandflip"
+    },
+    {
+      "name": "Endless Kickflip",
+      "category": "special",
+      "score": 1200,
+      "doubleTap": null,
+      "internalId": "Trick_EndlessKickflip"
+    },
+    {
+      "name": "Espana Sword Slide",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_BullF_Sword"
+    },
+    {
+      "name": "Fandangle",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Fandangle"
+    },
+    {
+      "name": "Fastplant",
+      "category": "jump",
+      "score": 250,
+      "doubleTap": null,
+      "internalId": "Trick_Fastplant"
+    },
+    {
+      "name": "Fingerflip",
+      "category": "flip",
+      "score": 700,
+      "doubleTap": "Double Fingerflip",
+      "internalId": "Trick_Fingerflip"
+    },
+    {
+      "name": "Fingerflip Airwalk",
+      "category": "special",
+      "score": 2750,
+      "doubleTap": null,
+      "internalId": "Trick_FingerFlipAirWalk"
+    },
+    {
+      "name": "Flamingo",
+      "category": "special",
+      "score": 2000,
+      "doubleTap": null,
+      "internalId": "Trick_Flamingo"
+    },
+    {
+      "name": "Flip 2 Switch",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_KickflipSwitch"
+    },
+    {
+      "name": "Franklin Grind",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Franklin_Grind"
+    },
+    {
+      "name": "Front Foot Impossible",
+      "category": "flip",
+      "score": 525,
+      "doubleTap": "Dbl. FF Impossible",
+      "internalId": "Trick_FFImpossible"
+    },
+    {
+      "name": "FS 540",
+      "category": "special",
+      "score": 5500,
+      "doubleTap": null,
+      "internalId": "Trick_FS540"
+    },
+    {
+      "name": "FS Bigspin",
+      "category": "flip",
+      "score": 500,
+      "doubleTap": "540 FS Shove-It",
+      "internalId": "Trick_BSBigSpin"
+    },
+    {
+      "name": "FS Flip",
+      "category": "flip",
+      "score": 500,
+      "doubleTap": "360 Flip",
+      "internalId": "Trick_FSFlip"
+    },
+    {
+      "name": "FS Noseblunt",
+      "category": "lip",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_Noseblunt"
+    },
+    {
+      "name": "FS Nosepick",
+      "category": "lip",
+      "score": 550,
+      "doubleTap": null,
+      "internalId": "Trick_Nosepick"
+    },
+    {
+      "name": "FS Shifty",
+      "category": "grab",
+      "score": 500,
+      "doubleTap": "BS Shifty",
+      "internalId": "Trick_FSShifty"
+    },
+    {
+      "name": "FS Shove-It",
+      "category": "flip",
+      "score": 100,
+      "doubleTap": "360 FS Shove-It",
+      "internalId": "Trick_FSShoveIt"
+    },
+    {
+      "name": "Gazelle Underflip",
+      "category": "special",
+      "score": 3500,
+      "doubleTap": null,
+      "internalId": "Trick_Gazelle"
+    },
+    {
+      "name": "Grind N Barf",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_GrindNBarf"
+    },
+    {
+      "name": "Gymnast Plant",
+      "category": "lip",
+      "score": 575,
+      "doubleTap": null,
+      "internalId": "Trick_GymnastPlant"
+    },
+    {
+      "name": "Half Cab Impossible",
+      "category": "manual",
+      "score": 750,
+      "doubleTap": null,
+      "internalId": "Trick_HalfCabImpossible"
+    },
+    {
+      "name": "HalfCab UnderFlip",
+      "category": "special",
+      "score": 3500,
+      "doubleTap": null,
+      "internalId": "Trick_HalfCabUnderFlip"
+    },
+    {
+      "name": "HandStand",
+      "category": "manual",
+      "score": 1100,
+      "doubleTap": null,
+      "internalId": "Trick_Handstand"
+    },
+    {
+      "name": "Hardflip",
+      "category": "flip",
+      "score": 300,
+      "doubleTap": "360 Hardflip",
+      "internalId": "Trick_Hardflip"
+    },
+    {
+      "name": "Hardflip Late Flip",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_HardFlipBackFootFlip"
+    },
+    {
+      "name": "HeadKick BackFlip",
+      "category": "special",
+      "score": 2550,
+      "doubleTap": null,
+      "internalId": "Trick_HeadKickBackFlip"
+    },
+    {
+      "name": "Heelflip",
+      "category": "flip",
+      "score": 100,
+      "doubleTap": "Double Heelflip",
+      "internalId": "Trick_Heelflip"
+    },
+    {
+      "name": "Heelflip FS Invert",
+      "category": "special",
+      "score": 6500,
+      "doubleTap": null,
+      "internalId": "Trick_HeelflipFSInvert"
+    },
+    {
+      "name": "Heelflip Varial Lien",
+      "category": "flip",
+      "score": 800,
+      "doubleTap": null,
+      "internalId": "Trick_HFVarialLien"
+    },
+    {
+      "name": "Hero",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Hero"
+    },
+    {
+      "name": "Ho Ho Sad Plant",
+      "category": "special",
+      "score": 6750,
+      "doubleTap": null,
+      "internalId": "Trick_HoHoSadplant"
+    },
+    {
+      "name": "Ho Ho Street Plant",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_HoHoStreetPlant"
+    },
+    {
+      "name": "Hot Rod",
+      "category": "special",
+      "score": 4250,
+      "doubleTap": null,
+      "internalId": "Trick_HotRod"
+    },
+    {
+      "name": "Impossible",
+      "category": "flip",
+      "score": 100,
+      "doubleTap": "Double Impossible",
+      "internalId": "Trick_Impossible"
+    },
+    {
+      "name": "Indy",
+      "category": "grab",
+      "score": 300,
+      "doubleTap": "Stiffy",
+      "internalId": "Trick_Indy"
+    },
+    {
+      "name": "Indy 900",
+      "category": "special",
+      "score": 11000,
+      "doubleTap": null,
+      "internalId": "Trick_Indy900"
+    },
+    {
+      "name": "Indy Nosebone",
+      "category": "grab",
+      "score": 350,
+      "doubleTap": "Del Mar Indy",
+      "internalId": "Trick_IndyNosebone"
+    },
+    {
+      "name": "Invert",
+      "category": "lip",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_MuteInvert"
+    },
+    {
+      "name": "Inward Heelflip",
+      "category": "flip",
+      "score": 350,
+      "doubleTap": "360 Inward Heelflip",
+      "internalId": "Trick_InwardHeelflip"
+    },
+    {
+      "name": "Japan",
+      "category": "grab",
+      "score": 350,
+      "doubleTap": "One Foot Japan",
+      "internalId": "Trick_Japan"
+    },
+    {
+      "name": "Judo",
+      "category": "other",
+      "score": 1150,
+      "doubleTap": null,
+      "internalId": "Trick_Judo"
+    },
+    {
+      "name": "Kickflip",
+      "category": "flip",
+      "score": 100,
+      "doubleTap": "Double Kickflip",
+      "internalId": "Trick_Kickflip"
+    },
+    {
+      "name": "Kickflip Backflip",
+      "category": "special",
+      "score": 3750,
+      "doubleTap": null,
+      "internalId": "Trick_KFBackflip"
+    },
+    {
+      "name": "Kickflip Underflip",
+      "category": "special",
+      "score": 1750,
+      "doubleTap": null,
+      "internalId": "Trick_KickFlipUnderFlip"
+    },
+    {
+      "name": "Madonna",
+      "category": "grab",
+      "score": 750,
+      "doubleTap": "Judo",
+      "internalId": "Trick_Madonna"
+    },
+    {
+      "name": "Manual",
+      "category": "manual",
+      "score": 100,
+      "doubleTap": null,
+      "internalId": "Trick_Manual"
+    },
+    {
+      "name": "Manual Entertainer",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_JesterJuggle"
+    },
+    {
+      "name": "McTwist",
+      "category": "special",
+      "score": 5000,
+      "doubleTap": null,
+      "internalId": "Trick_McTwist"
+    },
+    {
+      "name": "Melon",
+      "category": "grab",
+      "score": 300,
+      "doubleTap": "Method",
+      "internalId": "Trick_Melon"
+    },
+    {
+      "name": "Method",
+      "category": "other",
+      "score": 400,
+      "doubleTap": null,
+      "internalId": "Trick_Method"
+    },
+    {
+      "name": "Mix It Up",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_MixItUp"
+    },
+    {
+      "name": "Moonwalk Five-O",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_MoonwalkGrind"
+    },
+    {
+      "name": "Muska 5-0 Flames",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Muska_Burn"
+    },
+    {
+      "name": "Mute",
+      "category": "grab",
+      "score": 350,
+      "doubleTap": "Seatbelt Air",
+      "internalId": "Trick_Mute"
+    },
+    {
+      "name": "No Comply 360 Shove-It",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_NoComplyLate360"
+    },
+    {
+      "name": "No Problem 900",
+      "category": "special",
+      "score": 1750,
+      "doubleTap": null,
+      "internalId": "Trick_Koston900"
+    },
+    {
+      "name": "Nollie 360Flip Crook",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_FSNollie360FlipCrook"
+    },
+    {
+      "name": "Nose Manual",
+      "category": "manual",
+      "score": 100,
+      "doubleTap": null,
+      "internalId": "Trick_NoseManual"
+    },
+    {
+      "name": "Nose Pivot",
+      "category": "manual",
+      "score": 250,
+      "doubleTap": null,
+      "internalId": "Trick_Gturn"
+    },
+    {
+      "name": "Nosegrab",
+      "category": "grab",
+      "score": 300,
+      "doubleTap": "Rocket Air",
+      "internalId": "Trick_Nosegrab"
+    },
+    {
+      "name": "Old Sk00l Kickflip",
+      "category": "flip",
+      "score": 300,
+      "doubleTap": "Double Kickflip",
+      "internalId": "Trick_OldSkoolKickflip"
+    },
+    {
+      "name": "Ollie Airwalk",
+      "category": "flip",
+      "score": 500,
+      "doubleTap": "Ollie Airwalk Late Shove-it",
+      "internalId": "Trick_OllieAirwalk"
+    },
+    {
+      "name": "Ollie North",
+      "category": "flip",
+      "score": 169,
+      "doubleTap": "Ollie North Back Foot Flip",
+      "internalId": "Trick_OllieNorth"
+    },
+    {
+      "name": "One Foot Darkslide",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootDarkSlide"
+    },
+    {
+      "name": "One Foot Invert",
+      "category": "lip",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootInvert"
+    },
+    {
+      "name": "One Foot Japan",
+      "category": "other",
+      "score": 800,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootJapan"
+    },
+    {
+      "name": "One Foot Manual",
+      "category": "manual",
+      "score": 1050,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootManual"
+    },
+    {
+      "name": "One Foot Nose Manual",
+      "category": "manual",
+      "score": 1050,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootNosemanual"
+    },
+    {
+      "name": "One Foot Smith",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootSmith"
+    },
+    {
+      "name": "One Foot Tailgrab",
+      "category": "other",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootTailgrab"
+    },
+    {
+      "name": "One Wheel Nosemanual",
+      "category": "special",
+      "score": 4100,
+      "doubleTap": null,
+      "internalId": "Trick_OneFootOneWheel"
+    },
+    {
+      "name": "Paulie Butt Manual",
+      "category": "special",
+      "score": 4000,
+      "doubleTap": null,
+      "internalId": "Trick_Butt_Manual"
+    },
+    {
+      "name": "Pivot",
+      "category": "manual",
+      "score": 250,
+      "doubleTap": null,
+      "internalId": "Trick_Gturn2"
+    },
+    {
+      "name": "Pogo",
+      "category": "manual",
+      "score": 750,
+      "doubleTap": null,
+      "internalId": "Trick_Pogo"
+    },
+    {
+      "name": "Pop Shove-It",
+      "category": "flip",
+      "score": 100,
+      "doubleTap": "360 Shove-It",
+      "internalId": "Trick_PopShoveIt"
+    },
+    {
+      "name": "Primo",
+      "category": "special",
+      "score": 4000,
+      "doubleTap": null,
+      "internalId": "Trick_PrimoSlide"
+    },
+    {
+      "name": "Primo Handstand",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_PrimoHandStand"
+    },
+    {
+      "name": "Primo Spin",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_PrimoSpin"
+    },
+    {
+      "name": "Quad Heelflip",
+      "category": "special",
+      "score": 3250,
+      "doubleTap": null,
+      "internalId": "Trick_QuadrupleHeelFlip"
+    },
+    {
+      "name": "Rock to Fakie",
+      "category": "lip",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_RockToFakie"
+    },
+    {
+      "name": "Rocket Air",
+      "category": "other",
+      "score": 400,
+      "doubleTap": null,
+      "internalId": "Trick_Rocket"
+    },
+    {
+      "name": "Rodney Primo",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_RodneyGrind"
+    },
+    {
+      "name": "Rotisserie",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_Rotisserie"
+    },
+    {
+      "name": "Running Manual",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_RunningMan"
+    },
+    {
+      "name": "Russian Boneless",
+      "category": "special",
+      "score": 6500,
+      "doubleTap": null,
+      "internalId": "Trick_Russian"
+    },
+    {
+      "name": "Rusty Slide Manual",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_RustySlide"
+    },
+    {
+      "name": "Sacktap",
+      "category": "other",
+      "score": 1500,
+      "doubleTap": null,
+      "internalId": "Trick_SackTap"
+    },
+    {
+      "name": "Sal Flip",
+      "category": "flip",
+      "score": 900,
+      "doubleTap": "360 Sal Flip",
+      "internalId": "Trick_SalFlip"
+    },
+    {
+      "name": "Salute",
+      "category": "special",
+      "score": 1000,
+      "doubleTap": null,
+      "internalId": "Trick_Solute"
+    },
+    {
+      "name": "Samba Flip",
+      "category": "special",
+      "score": 1850,
+      "doubleTap": null,
+      "internalId": "Trick_SambaFlip"
+    },
+    {
+      "name": "Seatbelt Air",
+      "category": "other",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_Seatbelt"
+    },
+    {
+      "name": "Semi Flip",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_SemiFlip"
+    },
+    {
+      "name": "Sheckler Grab",
+      "category": "special",
+      "score": 2000,
+      "doubleTap": null,
+      "internalId": "Trick_ShecklerGrab"
+    },
+    {
+      "name": "Shifty Shifty",
+      "category": "special",
+      "score": 2500,
+      "doubleTap": null,
+      "internalId": "Trick_Shifty360ShovitBSShifty"
+    },
+    {
+      "name": "Sit Down Air",
+      "category": "special",
+      "score": 1200,
+      "doubleTap": null,
+      "internalId": "Trick_SitDownAir"
+    },
+    {
+      "name": "Slam Spinner",
+      "category": "special",
+      "score": 3500,
+      "doubleTap": null,
+      "internalId": "Trick_SlamSpinner"
+    },
+    {
+      "name": "Spacewalk",
+      "category": "manual",
+      "score": 1200,
+      "doubleTap": null,
+      "internalId": "Trick_Spacewalk"
+    },
+    {
+      "name": "Sproing",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_Sproing"
+    },
+    {
+      "name": "Stalefish",
+      "category": "grab",
+      "score": 350,
+      "doubleTap": "Stalefish Tweak",
+      "internalId": "Trick_Stalefish"
+    },
+    {
+      "name": "Stalefish Tweak",
+      "category": "other",
+      "score": 400,
+      "doubleTap": null,
+      "internalId": "Trick_Stalefish_Layback"
+    },
+    {
+      "name": "Stiffy",
+      "category": "other",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_Stiffy"
+    },
+    {
+      "name": "Stupid Grind",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Shortbus"
+    },
+    {
+      "name": "Surfer",
+      "category": "special",
+      "score": 4500,
+      "doubleTap": null,
+      "internalId": "Trick_TonySurfer"
+    },
+    {
+      "name": "Swimming with Sharks",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_ShecklerPrimo"
+    },
+    {
+      "name": "Switch Foot Pogo",
+      "category": "manual",
+      "score": 800,
+      "doubleTap": null,
+      "internalId": "Trick_SwitchFootPogo"
+    },
+    {
+      "name": "Tailblock Slide",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_TailblockSlide"
+    },
+    {
+      "name": "Tailgrab",
+      "category": "grab",
+      "score": 300,
+      "doubleTap": "One Foot Tailgrab",
+      "internalId": "Trick_Tailgrab"
+    },
+    {
+      "name": "The 900",
+      "category": "special",
+      "score": 9000,
+      "doubleTap": null,
+      "internalId": "Trick_The900"
+    },
+    {
+      "name": "The Bird",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_TheBird"
+    },
+    {
+      "name": "The Switcheroo",
+      "category": "lip",
+      "score": 600,
+      "doubleTap": null,
+      "internalId": "Trick_Switcheroo"
+    },
+    {
+      "name": "To Rail",
+      "category": "manual",
+      "score": 1050,
+      "doubleTap": null,
+      "internalId": "Trick_ToRail"
+    },
+    {
+      "name": "Truckstand",
+      "category": "manual",
+      "score": 800,
+      "doubleTap": null,
+      "internalId": "Trick_Truckstand"
+    },
+    {
+      "name": "Varial Heelflip",
+      "category": "flip",
+      "score": 300,
+      "doubleTap": "360 Heelflip",
+      "internalId": "Trick_VarialHeelflip"
+    },
+    {
+      "name": "Varial Invert to Fakie",
+      "category": "lip",
+      "score": 450,
+      "doubleTap": null,
+      "internalId": "Trick_Invert"
+    },
+    {
+      "name": "Varial Kickflip",
+      "category": "flip",
+      "score": 300,
+      "doubleTap": "360 Flip",
+      "internalId": "Trick_VarialKickflip"
+    },
+    {
+      "name": "Wax Slide",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Waxslide"
+    },
+    {
+      "name": "Worm Grind",
+      "category": "special",
+      "score": null,
+      "doubleTap": null,
+      "internalId": "Trick_Worm"
+    },
+    {
+      "name": "Wrap Around",
+      "category": "manual",
+      "score": 500,
+      "doubleTap": null,
+      "internalId": "Trick_PogoFlip"
+    },
+    {
+      "name": "Wrap Around",
+      "category": "grab",
+      "score": 450,
+      "doubleTap": "Body Wrap",
+      "internalId": "Trick_SaranWrap"
+    },
+    {
+      "name": "Yeah Right",
+      "category": "special",
+      "score": 3100,
+      "doubleTap": null,
+      "internalId": "Trick_YeahRight"
+    }
+  ],
+  "tapVariants": [
+    {
+      "name": "360 Back Foot Shove-It",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Extra_360BackfootShoveIt"
+    },
+    {
+      "name": "360 Flip",
+      "category": "flip",
+      "score": 550,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Extra_VarialKickflip"
+    },
+    {
+      "name": "360 FS Shove-It",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": "540 FS Shove-It",
+      "gameMode": null,
+      "internalId": "ExtraFS360ShoveIt"
+    },
+    {
+      "name": "360 Heelflip",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Extra_VarialHeelflip"
+    },
+    {
+      "name": "360 Shove-It",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": "540 Shove-It",
+      "gameMode": null,
+      "internalId": "Extra360ShoveIt"
+    },
+    {
+      "name": "540 FS Shove-It",
+      "category": "flip",
+      "score": 1000,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "ExtraFS540ShoveIt"
+    },
+    {
+      "name": "540 Shove-It",
+      "category": "flip",
+      "score": 1000,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Extra540ShoveIt"
+    },
+    {
+      "name": "Anti Casper Flip",
+      "category": "manual",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "AntiCasperBranches"
+    },
+    {
+      "name": "Beni Fingerflip",
+      "category": "flip",
+      "score": 1000,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "BenihanaFingerflip"
+    },
+    {
+      "name": "BS 180 Flip",
+      "category": "flip",
+      "score": 100,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_BS180PressureFlip"
+    },
+    {
+      "name": "BS 360 Flip",
+      "category": "flip",
+      "score": 200,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_BS360PressureFlip"
+    },
+    {
+      "name": "BS Toe Flip",
+      "category": "flip",
+      "score": 100,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_BSToeFlip"
+    },
+    {
+      "name": "Casper Flip",
+      "category": "manual",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "CasperBranches"
+    },
+    {
+      "name": "Chainsaw Manual",
+      "category": "manual",
+      "score": 100,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_Vehicle_Manual"
+    },
+    {
+      "name": "Double Back Foot Flip",
+      "category": "flip",
+      "score": 550,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Extra_DBackfootKickflip"
+    },
+    {
+      "name": "Double Back Foot Heelflip",
+      "category": "flip",
+      "score": 550,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Extra_DBackfootHeelflip"
+    },
+    {
+      "name": "Double Fire!",
+      "category": "mode",
+      "score": 500,
+      "tapsAgainInto": "Triple Fire!",
+      "gameMode": "Firefight",
+      "internalId": "DoubleFireballF"
+    },
+    {
+      "name": "Double Heelflip",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": "Triple Heelflip",
+      "gameMode": null,
+      "internalId": "DoubleHeelflip"
+    },
+    {
+      "name": "Double Impossible",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": "Triple Impossible",
+      "gameMode": null,
+      "internalId": "DoubleImpossible"
+    },
+    {
+      "name": "Double Kickflip",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": "Triple Kickflip",
+      "gameMode": null,
+      "internalId": "DoubleKickflip"
+    },
+    {
+      "name": "Double Kickflip",
+      "category": "grab",
+      "score": null,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trigger_Extra_Grab_Tweak"
+    },
+    {
+      "name": "Double Kickflip",
+      "category": "grab",
+      "score": null,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trigger_Extra_Grab"
+    },
+    {
+      "name": "Double Kickflip",
+      "category": "flip",
+      "score": null,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trigger_Extra_Flip"
+    },
+    {
+      "name": "Double Kickflip",
+      "category": "flip",
+      "score": 500,
+      "tapsAgainInto": "Triple Kickflip",
+      "gameMode": null,
+      "internalId": "KickflipExtras"
+    },
+    {
+      "name": "Double Reverse Fire!",
+      "category": "mode",
+      "score": 500,
+      "tapsAgainInto": "Triple Reverse Fire!",
+      "gameMode": "Firefight",
+      "internalId": "DoubleFireballB"
+    },
+    {
+      "name": "Fire!",
+      "category": "mode",
+      "score": 100,
+      "tapsAgainInto": "Double Fire!",
+      "gameMode": "Firefight",
+      "internalId": "FireballF"
+    },
+    {
+      "name": "FS 360 Flip",
+      "category": "flip",
+      "score": 200,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_FS360PressureFlip"
+    },
+    {
+      "name": "Hairy Foot Grab",
+      "category": "grab",
+      "score": 400,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Motoskateboard_AirTricks"
+    },
+    {
+      "name": "Half Wrap Truck Transfer",
+      "category": "manual",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "SwitchFootPogo_Branches"
+    },
+    {
+      "name": "Handflip",
+      "category": "manual",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "HandstandBranches"
+    },
+    {
+      "name": "Object Placed!",
+      "category": "mode",
+      "score": 0,
+      "tapsAgainInto": null,
+      "gameMode": "Scavenger Hunt",
+      "internalId": "ScavengerF"
+    },
+    {
+      "name": "Pressure Flip",
+      "category": "flip",
+      "score": 100,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_PressureFlip"
+    },
+    {
+      "name": "Pressure Flip",
+      "category": "flip",
+      "score": 100,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "Trick_PressureFlip2"
+    },
+    {
+      "name": "Quad Fire!",
+      "category": "mode",
+      "score": 2000,
+      "tapsAgainInto": null,
+      "gameMode": "Firefight",
+      "internalId": "QuadFireballF"
+    },
+    {
+      "name": "Quad Reverse Fire!",
+      "category": "mode",
+      "score": 2000,
+      "tapsAgainInto": null,
+      "gameMode": "Firefight",
+      "internalId": "QuadFireballB"
+    },
+    {
+      "name": "Rail Flip",
+      "category": "manual",
+      "score": 500,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "ToRail_Branches"
+    },
+    {
+      "name": "Reverse Fire!",
+      "category": "mode",
+      "score": 100,
+      "tapsAgainInto": "Double Reverse Fire!",
+      "gameMode": "Firefight",
+      "internalId": "FireballB"
+    },
+    {
+      "name": "Triple Fire!",
+      "category": "mode",
+      "score": 1000,
+      "tapsAgainInto": "Quad Fire!",
+      "gameMode": "Firefight",
+      "internalId": "TripleFireballF"
+    },
+    {
+      "name": "Triple Heelflip",
+      "category": "flip",
+      "score": 1000,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "TripleHeelflip"
+    },
+    {
+      "name": "Triple Impossible",
+      "category": "flip",
+      "score": 1000,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "TripleImpossible"
+    },
+    {
+      "name": "Triple Kickflip",
+      "category": "flip",
+      "score": 1000,
+      "tapsAgainInto": null,
+      "gameMode": null,
+      "internalId": "TripleKickflip"
+    },
+    {
+      "name": "Triple Reverse Fire!",
+      "category": "mode",
+      "score": 1000,
+      "tapsAgainInto": "Quad Reverse Fire!",
+      "gameMode": "Firefight",
+      "internalId": "TripleFireballB"
+    },
+    {
+      "name": "Truckstand Flip",
+      "category": "manual",
+      "score": 500,
+      "tapsAgainInto": "Truckstand Flip",
+      "gameMode": null,
+      "internalId": "TruckstandBranches"
+    }
+  ]
+}
