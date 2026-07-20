@@ -46,10 +46,14 @@ def main(path='data/thug2-tricks.json'):
     check('schemaVersion present', bool(d.get('schemaVersion')))
     check('provenance present', bool(d.get('provenance', {}).get('source')))
     check('knownGaps present', len(d.get('knownGaps', [])) > 0)
+    # 'open' means a question we have raised but not answered. It is a real
+    # state and must be expressible, otherwise the honest answer gets rounded
+    # up to a confident one.
+    valid_confidence = ('verified', 'inferred', 'open')
     check('every gap states its confidence',
-          all(g.get('confidence') in ('verified', 'inferred') for g in d['knownGaps']),
+          all(g.get('confidence') in valid_confidence for g in d['knownGaps']),
           [g.get('id') for g in d['knownGaps']
-           if g.get('confidence') not in ('verified', 'inferred')])
+           if g.get('confidence') not in valid_confidence])
 
     # names
     named = (d['assignableTricks'] + d['tapVariants']

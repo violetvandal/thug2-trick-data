@@ -144,7 +144,30 @@ class Names:
         return None
 
 
-_BTN_ORDER = {'flip': 0, 'grab': 1, 'lip-grind': 2}
+# The three slots whose names carry no direction. Their triggers live in
+# groundtricks.qb rather than in the binding table, so they read as "no input"
+# unless you go and look them up:
+#   Jumptricks = [{Trigger={TapTwiceRelease, Up, X, 500} TrickSlot=JumpSlot}]
+#   Reverts    = [{Trigger={Press, R2, 200} TrickSlot=ExtraSlot1} ...]
+# Links the scripts do not express, confirmed by playing the game. Kept explicit
+# and separate from anything parsed, so it is obvious which claims rest on
+# testing rather than on the files, and so a future correction can overturn one
+# without touching the parser.
+#
+# Bigfoot's board: chainsaw_params carries Motoskateboard_AirTricks (Hairy Foot
+# Grab, Bigfoot Flip) but no profile field ties it to a character. Confirmed
+# in-game 2026-07-19 that these are Bigfoot's.
+PLAYTEST_CONFIRMED_VEHICLES = {
+    'Chainsaw Skater': 'chainsaw_params',
+}
+
+SLOT_INPUTS = {
+    'jumpslot': {'d': ['U', 'U'], 'b': 'jump'},
+    'extraslot1': {'d': [], 'b': None, 'shoulder': 'R2'},
+    'extraslot2': {'d': [], 'b': None, 'shoulder': 'L2'},
+}
+
+_BTN_ORDER = {'flip': 0, 'grab': 1, 'lip-grind': 2, 'jump': 3}
 _DIR_ORDER = ['D', 'DL', 'DR', 'L', 'R', 'U', 'UL', 'UR']
 
 
@@ -153,17 +176,107 @@ def _sort_key(row):
     Reads the INTERNAL input shape, so call this before public() renames keys."""
     i = row.get('input')
     if not i:
-        return (4, 0, 9, 9)
-    return (_BTN_ORDER.get(i['b'], 3),
+        return (5, 0, 9, 9)
+    dirs = i.get('d') or []
+    # shoulder-only slots (the reverts) carry no direction and no face button
+    return (_BTN_ORDER.get(i.get('b'), 4),
             1 if i.get('x2') else 0,
-            len(i['d']),
-            _DIR_ORDER.index(i['d'][0]) if i['d'][0] in _DIR_ORDER else 9)
+            len(dirs),
+            _DIR_ORDER.index(dirs[0]) if dirs and dirs[0] in _DIR_ORDER else 9)
 
 
 def _strip_stance(name):
     """Drop a leading FS/BS so grind families read as one trick, not two."""
     return re.sub(r'^(FS|BS)\s+', '', name) if name else name
 
+
+
+
+def _parse_aerial_flips(airtricks):
+    """Whole-body rotations. A different shape again: no Trigger, just a pair of
+    directions (`button1=Down button2=Down`), which is why the sweep misses them.
+    Roll resolves to BS/FS at runtime depending on which way you are facing."""
+    body = _named_block(airtricks, 'AerialFlips')
+    out = []
+    for m in re.finditer(
+            r'button1=(\w+)\s+button2=(\w+)[^}]*?name="([^"]+)"[^}]*?score=(\d+)', body, re.I):
+        d1, d2, label, score = m.groups()
+        key = (label, d1.lower())
+        out.append({'name': label,
+                    'directions': [d1.capitalize(), d2.capitalize()],
+                    'score': int(score)})
+    return out
+
+# ---------------------------------------------------------------- general sweep
+
+_TRIGGER_FORMS = [
+    # (regex over the trigger body, builder)
+    (r'^Press,\s*(\w+)', lambda g: {'buttons': [g[0]]}),
+    (r'^PressAndRelease,\s*(\w+),\s*(\w+)', lambda g: {'d': [g[0]], 'buttons': [g[1]]}),
+    (r'^TapTwiceRelease,\s*(\w+),\s*(\w+)', lambda g: {'d': [g[0], g[0]], 'buttons': [g[1]]}),
+    (r'^InOrder,\s*(?:a=)?(\w+),\s*(?:b=)?(\w+)', lambda g: {'buttons': [g[0], g[1]]}),
+    (r'^TripleInOrder(?:Sloppy)?,\s*(\w+),\s*(\w+),\s*(\w+)',
+     lambda g: {'d': [g[0], g[1]], 'buttons': [g[2]]}),
+    (r'^AirTrickLogic,\s*(\w+),\s*(\w+)', lambda g: {'buttons': [g[0]], 'd': [g[1]]}),
+]
+_DIR_WORD = {'up': 'U', 'down': 'D', 'left': 'L', 'right': 'R',
+             'upleft': 'UL', 'upright': 'UR', 'downleft': 'DL', 'downright': 'DR'}
+_SHOULDER = {'l1', 'l2', 'r1', 'r2'}
+
+
+def _sweep_triggered_tricks(corpus, clean):
+    """Every `{Trigger={...} ... Name="..."}` in the skater scripts.
+
+    The targeted parsers above each read ONE named list, which means a trick
+    defined in a list nobody thought to look up is silently absent. That is how
+    Backflip, the manual spins and the kickflip-to-grab blends went missing. This
+    sweep is deliberately shape-based rather than name-based so a list we have
+    never heard of still shows up.
+    """
+    found = {}
+    for src, text in corpus.items():
+        if '/skater/' not in src and not src.endswith('groundtricks'):
+            continue
+        for m in re.finditer(
+                r'\{Trigger=\{([^{}]*)\}(.*?)\bName\s*=\s*%?"([^"]{2,60})"',
+                text, re.I | re.S):
+            body, between, label = m.group(1), m.group(2), clean.sub('', m.group(3)).strip()
+            if len(between) > 260:          # the Name belongs to a later entry
+                continue
+            entry = None
+            for pattern, build in _TRIGGER_FORMS:
+                hit = re.match(pattern, body.strip(), re.I)
+                if hit:
+                    entry = build([g for g in hit.groups()])
+                    break
+            if entry is None:
+                continue
+            out = {'name': label, 'source': src.rsplit('/', 1)[-1]}
+            dirs, btns, shoulders = [], [], []
+            for token in entry.get('d', []):
+                key = token.lower().replace('_', '')
+                if key in _DIR_WORD:
+                    dirs.append(_DIR_WORD[key])
+            for token in entry.get('buttons', []):
+                low = token.lower()
+                if low in BTN_FROM_WORD:
+                    btns.append(BTN_FROM_WORD[low])
+                elif low in _SHOULDER:
+                    shoulders.append(token.upper())
+                elif low == 'x':
+                    btns.append('jump')
+                elif low.replace('_', '') in _DIR_WORD:
+                    dirs.append(_DIR_WORD[low.replace('_', '')])
+            if dirs:
+                out['d'] = dirs
+            if btns:
+                out['buttons'] = btns
+            if shoulders:
+                out['shoulder'] = shoulders[0]
+            if not (dirs or btns or shoulders):
+                continue
+            found.setdefault(label, out)
+    return found
 
 # ---------------------------------------------------------------- trick sets
 
@@ -201,13 +314,16 @@ def _build_loadout(sets, names, mapping, slot_input, cat_of, special_slot):
     for slot, tid in _resolve(sets, mapping).items():
         if tid.startswith('#'):          # #xxxxxxxx = an empty slot
             continue
-        inp = slot_input(slot)
+        inp = slot_input(slot) or SLOT_INPUTS.get(slot.lower())
         label = special_slot.get(slot.lower())
         if not inp and not label:
             continue
         v = names.get(tid) or {}
-        key = ((tuple(inp['d']), inp['b'], bool(inp.get('x2'))) if inp
-               else ('slot', label, False))
+        # The key must capture EVERY part of the input that distinguishes one
+        # binding from another. Leaving out press-twice once merged Kickflip with
+        # Double Kickflip; leaving out the shoulder merged the two revert slots.
+        key = ((tuple(inp.get('d') or ()), inp.get('b'), bool(inp.get('x2')),
+                inp.get('shoulder')) if inp else ('slot', label, False, None))
         rows[key] = {
             'input': inp, 'slot': label,
             'name': names.of(tid) or tid.replace('Trick_', ''),
@@ -220,7 +336,18 @@ def _build_loadout(sets, names, mapping, slot_input, cat_of, special_slot):
 # ---------------------------------------------------------------- characters
 
 def _parse_characters(profile):
-    """master_skater_list, split on display_name so each block is one character."""
+    """master_skater_list, split on display_name so each block is one character.
+
+    `vehicle_params` is the ONLY signal that a character rides something. Do not
+    infer it from the ped profile's `board` field: that describes what the NPC
+    model carries, so Bull Fighter and Ben Franklin look like they ride a bull
+    and a segway when both are ordinary playable skaters. Bigfoot is the same,
+    a normal skater whose board happens to be a chainsaw.
+
+    `vehicle_params` matters: a character riding a vehicle uses the vehicle's own
+    small trick set, not the skater specials listed in the same block. Steve-O's
+    mechanical bull shows "Yee Haw!", never the Bite Board its profile lists.
+    """
     start = profile.find('master_skater_list = [')
     seg = profile[start:]
     marks = [m.start() for m in re.finditer(r'display_name\s*=\s*"', seg)] + [len(seg)]
@@ -228,14 +355,92 @@ def _parse_characters(profile):
     for i in range(len(marks) - 1):
         b = seg[marks[i]:marks[i + 1]]
         mapping = re.search(r'default_trick_mapping\s*=\s*(\w+)', b)
+        vehicle = re.search(r'vehicle_params\s*=\s*(\w+)', b)
+        appearance = re.search(r'default_appearance\s*=\s*(\w+)', b)
         out.append({
             'name': re.search(r'display_name\s*=\s*"([^"]*)"', b).group(1),
             'mapping': mapping.group(1) if mapping else None,
+            'vehicle': vehicle.group(1) if vehicle else None,
+            'appearance': appearance.group(1) if appearance else None,
             'specials': [(s, t) for s, t in
                          re.findall(r'trickslot=(\w+)\s+trickname=(\w+)', b)
                          if s != 'Unassigned'],
         })
     return out
+
+
+def _merge_mounted_pairs(characters):
+    """Collapse "X - Vehicle" / "X - Skater" into one character.
+
+    The roster stores three characters twice, mounted and on foot. The pair
+    differs ONLY in stats: the mounted profile pegs ollie and run to 1 and
+    balance to 10-11, because those do not apply while riding. Tricks, specials
+    and vehicle are identical, so a trick reference that keeps both prints
+    everything twice and inflates every "shared by N characters" count.
+
+    Merging here rather than at the end matters: the share counts and special
+    frequencies are derived from this list, so a late merge leaves them
+    describing a roster that no longer exists.
+    """
+    out, by_base = [], {}
+    for c in characters:
+        base, sep, variant = c['name'].partition(' - ')
+        if not sep:
+            out.append(c)
+            continue
+        prev = by_base.get(base)
+        if prev and prev['specials'] == c['specials'] and prev['vehicle'] == c['vehicle']:
+            prev['profiles'].append(variant)
+            continue
+        merged = dict(c, name=base, profiles=[variant])
+        by_base[base] = merged
+        out.append(merged)
+    return out
+
+
+def _parse_vehicles(vehicle_src):
+    """Vehicles have their own four-trick vocabulary, defined per vehicle.
+
+    Some also carry a real named trick list. The chainsaw board is the one that
+    matters: it is Bigfoot's, and its Motoskateboard_AirTricks give him a Hairy
+    Foot Grab and a Bigfoot Flip that exist nowhere else.
+    """
+    blocks = {}
+    for m in re.finditer(r'(?m)^\s*(\w+)\s*=\s*\{', vehicle_src):
+        seg = vehicle_src[m.start():m.start() + 2400]
+        if 'trick_name' not in seg:
+            continue
+
+        def field(key):
+            hit = re.search(key + r'\s*=\s*%?"([^"]+)"', seg)
+            return hit.group(1) if hit else None
+
+        blocks[m.group(1)] = ({
+            'jump': field('jump_name'),
+            'trick': field('trick_name'),
+            'trick2': field('trick_name2'),
+            'grind': field('grind_trick'),
+        }, seg)
+
+    # Named trick lists, attached to whichever params block drives the same anims.
+    for m in re.finditer(r'(?m)^\s*(\w+)_AirTricks\s*=\s*\[', vehicle_src):
+        body = _bracket_block(vehicle_src, m.end() - 1)
+        named = [
+            {'button': BTN_FROM_WORD.get(btn.lower(), btn.lower()),
+             'name': label,
+             'score': int(score) if score else None}
+            for btn, label, score in re.findall(
+                r'Trigger=\{Press,\s*(\w+),[^}]*\}[^}]*?name\s*=\s*%?"([^"]+)"'
+                r'(?:[^}]*?Score\s*=\s*(\d+))?', body, re.I)
+        ]
+        if not named:
+            continue
+        prefix = m.group(1).lower()
+        for vid, (data, seg) in blocks.items():
+            if prefix in seg.lower():
+                data['airTricks'] = named
+    return {vid: data for vid, (data, _seg) in blocks.items()}
+
 
 
 # ---------------------------------------------------------------- grinds
@@ -338,7 +543,11 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
     def fmt(inp):
         if not inp:
             return None
-        out = {'directions': [dirname[d] for d in inp['d']], 'button': inp['b']}
+        out = {'directions': [dirname[d] for d in inp.get('d', [])]}
+        if inp.get('b'):
+            out['button'] = inp['b']
+        if inp.get('shoulder'):
+            out['shoulder'] = inp['shoulder']
         if inp.get('x2'):
             out['pressTwice'] = True
         return out
@@ -347,6 +556,7 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
     loadouts = {m: _build_loadout(sets, names, m, slot_input, cat_of, special_slot)
                 for m in MAP_ORDER if m in sets}
     characters = _parse_characters(corpus.get('scripts/game/skater/skater_profile', ''))
+    characters = _merge_mounted_pairs(characters)
     total = len(characters)
 
     by_mapping = collections.defaultdict(list)
@@ -410,6 +620,25 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
             n = names.of(tid) or tid.replace('Trick_', '')
             freq[n] += 1
             sp_owner[n].append(c['name'])
+    vehicles = _parse_vehicles(corpus.get('scripts/game/skater/skater_vehicle', ''))
+
+    # Tricks triggered straight off the ground rather than through a slot, so they
+    # appear in no binding table. No Comply is the notable one.
+    ground = corpus.get('scripts/game/skater/groundtricks', '')
+    ground_tricks = []
+    seen_ground = set()
+    for m in re.finditer(
+            r'Trigger=\{PressAndRelease,\s*(\w+),\s*(\w+),\s*\d+\}[^}]*?'
+            r'Params=\{Name\s*=\s*%?"([^"]+)"', ground, re.I):
+        label = clean.sub('', m.group(3)).strip()
+        if label in seen_ground:
+            continue
+        seen_ground.add(label)
+        ground_tricks.append({
+            'name': label,
+            'input': {'directions': [dirname.get(m.group(1)[0].upper(), m.group(1))],
+                      'button': 'jump'},
+        })
     chars_out = []
     for c in characters:
         sp = []
@@ -419,7 +648,40 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
             sp.append({'name': n, 'input': fmt(slot_input(slot)), 'score': v.get('score'),
                        'signature': freq[n] == 1,
                        'alsoFactoryDefaultFor': [x for x in sp_owner[n] if x != c['name']]})
-        chars_out.append({'name': c['name'], 'trickSet': c['mapping'], 'specials': sp})
+        entry = {'name': c['name'], 'trickSet': c['mapping'], 'specials': sp}
+        if len(c.get('profiles') or []) > 1:
+            entry['profiles'] = c['profiles']
+        # "Chainsaw Skater" is Bigfoot; the roster name hides who it is.
+        if c.get('appearance'):
+            entry['modelId'] = c['appearance']
+        confirmed = PLAYTEST_CONFIRMED_VEHICLES.get(c['name'])
+        if confirmed and not c.get('vehicle'):
+            entry['board'] = {'id': confirmed,
+                              'tricks': vehicles.get(confirmed, {}),
+                              'source': 'confirmed in-game'}
+        if c.get('vehicle'):
+            # While mounted, the vehicle's own vocabulary replaces the skater
+            # tricks above, which is why Steve-O's bull does "Yee Haw!" and never
+            # the Bite Board his profile still lists.
+            entry['vehicle'] = {'id': c['vehicle'],
+                                'tricks': vehicles.get(c['vehicle'], {})}
+        chars_out.append(entry)
+
+    swept = _sweep_triggered_tricks(corpus, clean)
+
+    # Two stragglers the sweep cannot see, both real:
+    #   Chainsaw Grind lives in `script Trick_Motoskateboard_Grind`, so it is part
+    #   of Bigfoot's board rather than a triggered trick.
+    #   Truck Spin sits behind a `ProfileEquals is_named=mullen` guard.
+    vehicle_src = corpus.get('scripts/game/skater/skater_vehicle', '')
+    grind_hit = re.search(
+        r'script\s+Trick_Motoskateboard_Grind\s*\{[^{}]*\{[^{}]*?name\s*=\s*%?"([^"]+)"',
+        vehicle_src, re.I)
+    if grind_hit and 'chainsaw_params' in vehicles:
+        vehicles['chainsaw_params']['grind'] = grind_hit.group(1)
+    mullen_only = re.search(
+        r'ProfileEquals is_named=mullen.{0,400}?Name\s*=\s*%?"([^"]+)"',
+        corpus.get('scripts/game/skater/manualtricks', ''), re.S | re.I)
 
     fams, gdouble, gtaps = _build_grinds(corpus, names)
     m_entry, m_flat, m_man, m_nose = _build_manuals(corpus, names)
@@ -468,6 +730,78 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
                 'gameMode': mode.get(k), 'internalId': k})
     variants.sort(key=lambda x: x['name'].lower())
 
+    # Anything the targeted parsers already surfaced is not "other".
+    covered = set()
+
+    def seen(label):
+        if label:
+            covered.add(re.sub(r'\s+', ' ', label).strip().lower())
+
+    for t in pool + variants:
+        seen(t['name'])
+        seen(t.get('doubleTap'))
+        seen(t.get('tapsAgainInto'))
+    for r in baseline:
+        seen(r['name'])
+        seen(r.get('doubleTap'))
+    for rows in loadouts.values():
+        for r in rows.values():
+            seen(r['name'])
+            seen(r.get('doubleTap'))
+    for c in chars_out:
+        for sp_entry in c['specials']:
+            seen(sp_entry['name'])
+    for group in (m_entry, m_flat, m_man, m_nose):
+        for r in group:
+            seen(r['name'])
+    for name in names.all_grind_names:
+        seen(name)
+    for fam in fams:
+        for name in fam['gives']:
+            seen(name)
+    for name in gtaps.values():
+        seen(name)
+    for g in gdouble:
+        seen(g['name'])
+    for g in ground_tricks:
+        seen(g['name'])
+    for v in vehicles.values():
+        for key, val in v.items():
+            if key == 'airTricks':
+                for a in val:
+                    seen(a['name'])
+            else:
+                seen(val)
+
+    aerial = [
+        {'name': a['name'],
+         'directions': [dirname[_DIR_WORD[a['directions'][0].lower()]],
+                        dirname[_DIR_WORD[a['directions'][1].lower()]]],
+         'score': a['score']}
+        for a in _parse_aerial_flips(corpus.get('scripts/game/skater/airtricks', ''))
+    ]
+    for a in aerial:
+        seen(a['name'])
+
+    other_tricks = []
+    if mullen_only:
+        swept.setdefault(mullen_only.group(1),
+                         {'name': mullen_only.group(1), 'source': 'manualtricks',
+                          'buttons': [], 'onlyFor': 'Rodney Mullen'})
+    for label, info in sorted(swept.items()):
+        if re.sub(r'\s+', ' ', label).strip().lower() in covered:
+            continue
+        row = {'name': label, 'foundIn': info['source']}
+        if info.get('onlyFor'):
+            row['onlyFor'] = info['onlyFor']
+        if info.get('d'):
+            row['directions'] = [dirname[x] for x in info['d']]
+        if info.get('buttons'):
+            row['buttons'] = info['buttons']
+        if info.get('shoulder'):
+            row['shoulder'] = info['shoulder']
+        other_tricks.append(row)
+
     return collections.OrderedDict([
         ('schemaVersion', '1.0.0'),
         ('game', {'title': "Tony Hawk's Underground 2", 'platform': 'PC',
@@ -490,6 +824,14 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
                        'The Edit Tricks menu builds its list from the global '
                        'ConfigurableTricks array filtered by TrickIsLocked, which is '
                        'save-file unlock state and not character identity.'},
+            {'id': 'roster-may-exceed-what-is-playable', 'confidence': 'open',
+             'detail': 'master_skater_list is what the PC scripts DEFINE, which is not '
+                       'proven to be what the PC build lets you PLAY. Eric Sparrow has a '
+                       'full profile and four specials here, but did not appear as '
+                       'playable after unlocking every skater in a real PC install '
+                       '(2026-07-19). Some entries may be unused, cut, or carried over '
+                       'from another edition of the game. Treat character and trick '
+                       'availability as unverified until tested in-game.'},
             {'id': 'undefined-trick-ids', 'confidence': 'verified',
              'detail': '%d trick IDs are listed in alltricks.qb but have no definition '
                        'anywhere in the game files, so they carry no name, animation or '
@@ -499,7 +841,33 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
         ('buttonMap', {
             'flip': {'playstation': 'Square', 'xbox': 'X', 'gamecube': 'B'},
             'grab': {'playstation': 'Circle', 'xbox': 'B', 'gamecube': 'A'},
-            'lip-grind': {'playstation': 'Triangle', 'xbox': 'Y', 'gamecube': 'Y'}}),
+            'lip-grind': {'playstation': 'Triangle', 'xbox': 'Y', 'gamecube': 'Y'},
+            'jump': {'playstation': 'X', 'xbox': 'A', 'gamecube': 'X'}}),
+        ('aerialFlips', {
+            'note': 'Whole-body rotations in the air, entered by holding a direction. '
+                    'Roll shows as BS or FS depending on which way you are facing. The '
+                    'script names the directions but not the button, so the button is '
+                    'left unstated here rather than guessed.',
+            'tricks': aerial}),
+        ('otherTricks', {
+            'note': 'Found by sweeping the scripts for trigger constructs rather than '
+                    'by reading a known list. These are real, named and triggerable, '
+                    'but they sit outside the loadout, grind and manual tables above.',
+            'tricks': other_tricks}),
+        ('groundTricks', {
+            'note': 'Entered from the ground rather than from a slot binding.',
+            'tricks': ground_tricks}),
+        ('vehicles', {
+            'note': 'A character riding a vehicle uses this short vocabulary instead '
+                    'of their skater tricks. Only the characters listed under '
+                    '"usedBy" ever mount one.',
+            'sets': {vid: dict(
+                v,
+                usedBy=sorted({c['name'] for c in characters
+                               if c.get('vehicle') == vid}),
+                confirmedFor=sorted({name for name, v2 in
+                                     PLAYTEST_CONFIRMED_VEHICLES.items() if v2 == vid}))
+                for vid, v in vehicles.items()}}),
         ('sharedBaseline', {
             'description': 'Default slot bindings identical for all %d characters.' % total,
             'bindings': [public(r) for r in baseline]}),

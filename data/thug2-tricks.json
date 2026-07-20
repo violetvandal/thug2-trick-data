@@ -23,6 +23,11 @@
       "detail": "Per-character specials are FACTORY DEFAULTS, not exclusivity. The Edit Tricks menu builds its list from the global ConfigurableTricks array filtered by TrickIsLocked, which is save-file unlock state and not character identity."
     },
     {
+      "id": "roster-may-exceed-what-is-playable",
+      "confidence": "open",
+      "detail": "master_skater_list is what the PC scripts DEFINE, which is not proven to be what the PC build lets you PLAY. Eric Sparrow has a full profile and four specials here, but did not appear as playable after unlocking every skater in a real PC install (2026-07-19). Some entries may be unused, cut, or carried over from another edition of the game. Treat character and trick availability as unverified until tested in-game."
+    },
+    {
       "id": "undefined-trick-ids",
       "confidence": "verified",
       "detail": "24 trick IDs are listed in alltricks.qb but have no definition anywhere in the game files, so they carry no name, animation or score. They appear to be cut content and are omitted.",
@@ -69,10 +74,235 @@
       "playstation": "Triangle",
       "xbox": "Y",
       "gamecube": "Y"
+    },
+    "jump": {
+      "playstation": "X",
+      "xbox": "A",
+      "gamecube": "X"
+    }
+  },
+  "aerialFlips": {
+    "note": "Whole-body rotations in the air, entered by holding a direction. Roll shows as BS or FS depending on which way you are facing. The script names the directions but not the button, so the button is left unstated here rather than guessed.",
+    "tricks": [
+      {
+        "name": "Backflip",
+        "directions": [
+          "down",
+          "down"
+        ],
+        "score": 1000
+      },
+      {
+        "name": "Frontflip",
+        "directions": [
+          "up",
+          "up"
+        ],
+        "score": 1000
+      },
+      {
+        "name": "Roll",
+        "directions": [
+          "left",
+          "left"
+        ],
+        "score": 1000
+      },
+      {
+        "name": "Roll",
+        "directions": [
+          "right",
+          "right"
+        ],
+        "score": 1000
+      }
+    ]
+  },
+  "otherTricks": {
+    "note": "Found by sweeping the scripts for trigger constructs rather than by reading a known list. These are real, named and triggerable, but they sit outside the loadout, grind and manual tables above.",
+    "tricks": [
+      {
+        "name": "Anti Casper Spin",
+        "foundIn": "manualtricks",
+        "shoulder": "L2"
+      },
+      {
+        "name": "Casper Spin",
+        "foundIn": "manualtricks",
+        "shoulder": "L2"
+      },
+      {
+        "name": "Kickflip to Crail",
+        "foundIn": "airtricks",
+        "directions": [
+          "up"
+        ],
+        "buttons": [
+          "grab"
+        ]
+      },
+      {
+        "name": "Kickflip to Indy",
+        "foundIn": "airtricks",
+        "buttons": [
+          "grab"
+        ]
+      },
+      {
+        "name": "Pogo Spin",
+        "foundIn": "manualtricks",
+        "shoulder": "L2"
+      },
+      {
+        "name": "Pogo to Hair Flip",
+        "foundIn": "manualtricks",
+        "buttons": [
+          "grab",
+          "grab"
+        ]
+      },
+      {
+        "name": "Switch Foot Pogo Spin",
+        "foundIn": "manualtricks",
+        "shoulder": "L2"
+      },
+      {
+        "name": "Truck Spin",
+        "foundIn": "manualtricks",
+        "onlyFor": "Rodney Mullen"
+      },
+      {
+        "name": "TruckSpin",
+        "foundIn": "manualtricks",
+        "shoulder": "L2"
+      }
+    ]
+  },
+  "groundTricks": {
+    "note": "Entered from the ground rather than from a slot binding.",
+    "tricks": [
+      {
+        "name": "No Comply",
+        "input": {
+          "directions": [
+            "up"
+          ],
+          "button": "jump"
+        }
+      }
+    ]
+  },
+  "vehicles": {
+    "note": "A character riding a vehicle uses this short vocabulary instead of their skater tricks. Only the characters listed under \"usedBy\" ever mount one.",
+    "sets": {
+      "gurney_params": {
+        "jump": null,
+        "trick": "Gurney Air",
+        "trick2": null,
+        "grind": null,
+        "usedBy": [],
+        "confirmedFor": []
+      },
+      "shoppingcart_params": {
+        "jump": null,
+        "trick": "Cart Air",
+        "trick2": null,
+        "grind": null,
+        "usedBy": [],
+        "confirmedFor": []
+      },
+      "luge_params": {
+        "jump": "Jump It",
+        "trick": "Luge Hop",
+        "trick2": "BarSpin",
+        "grind": "Grind It",
+        "usedBy": [],
+        "confirmedFor": []
+      },
+      "slalom_params": {
+        "jump": "Jump It",
+        "trick": "Old School Ollie",
+        "trick2": "BarSpin",
+        "grind": "Grind It",
+        "usedBy": [],
+        "confirmedFor": []
+      },
+      "segway_params": {
+        "jump": "Jump It",
+        "trick": "One Footer",
+        "trick2": "BarSpin",
+        "grind": "Grind It",
+        "usedBy": [
+          "Jesse James"
+        ],
+        "confirmedFor": []
+      },
+      "tricycle_params": {
+        "jump": "Jump",
+        "trick": "Superman Seatgrab",
+        "trick2": "BarSpin",
+        "grind": "Grind",
+        "usedBy": [
+          "VooDoo"
+        ],
+        "confirmedFor": []
+      },
+      "wheelchair_params": {
+        "jump": "Chair Hop",
+        "trick": "One Hander",
+        "trick2": "Sit Flip",
+        "grind": "Chair Grind",
+        "usedBy": [
+          "Paulie"
+        ],
+        "confirmedFor": []
+      },
+      "minikart_params": {
+        "jump": "Jump",
+        "trick": "Toe Hang",
+        "trick2": "Flip",
+        "grind": "Grind",
+        "usedBy": [
+          "Minikart Driver"
+        ],
+        "confirmedFor": []
+      },
+      "mechbull_params": {
+        "jump": "Jump",
+        "trick": "Yee Haw!",
+        "trick2": "Bull flip",
+        "grind": "Grind",
+        "usedBy": [
+          "Steve-O"
+        ],
+        "confirmedFor": []
+      },
+      "chainsaw_params": {
+        "jump": "Ollie",
+        "trick": "Grab Trick",
+        "trick2": "Fliptrick",
+        "grind": "Chainsaw Grind",
+        "airTricks": [
+          {
+            "button": "grab",
+            "name": "Hairy Foot Grab",
+            "score": 400
+          },
+          {
+            "button": "flip",
+            "name": "Bigfoot Flip",
+            "score": 100
+          }
+        ],
+        "usedBy": [],
+        "confirmedFor": [
+          "Chainsaw Skater"
+        ]
+      }
     }
   },
   "sharedBaseline": {
-    "description": "Default slot bindings identical for all 31 characters.",
+    "description": "Default slot bindings identical for all 28 characters.",
     "bindings": [
       {
         "name": "Pop Shove-It",
@@ -196,7 +426,19 @@
       },
       {
         "name": "Revert",
-        "input": null,
+        "input": {
+          "directions": [],
+          "shoulder": "L2"
+        },
+        "slot": "Revert slot",
+        "category": "other"
+      },
+      {
+        "name": "Revert",
+        "input": {
+          "directions": [],
+          "shoulder": "R2"
+        },
         "slot": "Revert slot",
         "category": "other"
       }
@@ -218,7 +460,7 @@
           "score": 100,
           "category": "flip",
           "sharedByCharacters": 11,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Ollie North",
@@ -233,7 +475,7 @@
           "score": 169,
           "category": "flip",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Sal Flip",
@@ -248,7 +490,7 @@
           "score": 900,
           "category": "flip",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Double Kickflip",
@@ -263,7 +505,7 @@
           "score": 500,
           "category": "flip",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Tailgrab",
@@ -276,8 +518,8 @@
           "doubleTap": "One Foot Tailgrab",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -290,8 +532,8 @@
           "doubleTap": "Christ Air",
           "score": 450,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Indy",
@@ -304,8 +546,8 @@
           "doubleTap": "Stiffy",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Madonna",
@@ -319,7 +561,7 @@
           "score": 750,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -331,8 +573,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 27,
-          "ofTotal": 31
+          "sharedByCharacters": 24,
+          "ofTotal": 28
         },
         {
           "name": "Gymnast Plant",
@@ -345,7 +587,7 @@
           "score": 575,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "One Foot Invert",
@@ -358,7 +600,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Varial Invert to Fakie",
@@ -371,7 +613,7 @@
           "score": 450,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -384,7 +626,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -397,7 +639,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Andrecht Invert",
@@ -410,7 +652,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "The Switcheroo",
@@ -423,16 +665,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Boneless",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
-          "sharedByCharacters": 28,
-          "ofTotal": 31
+          "sharedByCharacters": 25,
+          "ofTotal": 28
         }
       ]
     },
@@ -451,7 +699,7 @@
           "score": 100,
           "category": "flip",
           "sharedByCharacters": 11,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Ollie North",
@@ -466,7 +714,7 @@
           "score": 169,
           "category": "flip",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Sal Flip",
@@ -481,7 +729,7 @@
           "score": 900,
           "category": "flip",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Double Kickflip",
@@ -496,7 +744,7 @@
           "score": 500,
           "category": "flip",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Tailgrab",
@@ -509,8 +757,8 @@
           "doubleTap": "One Foot Tailgrab",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -523,8 +771,8 @@
           "doubleTap": "Christ Air",
           "score": 450,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Indy",
@@ -537,8 +785,8 @@
           "doubleTap": "Stiffy",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Madonna",
@@ -552,7 +800,7 @@
           "score": 750,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -564,8 +812,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 27,
-          "ofTotal": 31
+          "sharedByCharacters": 24,
+          "ofTotal": 28
         },
         {
           "name": "Gymnast Plant",
@@ -578,7 +826,7 @@
           "score": 575,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "One Foot Invert",
@@ -591,7 +839,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Varial Invert to Fakie",
@@ -604,7 +852,7 @@
           "score": 450,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -617,7 +865,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -630,7 +878,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Andrecht Invert",
@@ -643,7 +891,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "The Switcheroo",
@@ -656,16 +904,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Boneless",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
-          "sharedByCharacters": 28,
-          "ofTotal": 31
+          "sharedByCharacters": 25,
+          "ofTotal": 28
         }
       ]
     },
@@ -683,8 +937,8 @@
           "doubleTap": "360 FS Shove-It",
           "score": 100,
           "category": "flip",
-          "sharedByCharacters": 20,
-          "ofTotal": 31
+          "sharedByCharacters": 17,
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -698,8 +952,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -713,8 +967,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Tailgrab",
@@ -727,8 +981,8 @@
           "doubleTap": "One Foot Tailgrab",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -741,8 +995,8 @@
           "doubleTap": "Christ Air",
           "score": 450,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Indy",
@@ -755,8 +1009,8 @@
           "doubleTap": "Stiffy",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Crossbone",
@@ -769,8 +1023,8 @@
           "doubleTap": "CrookedCop",
           "score": 425,
           "category": "grab",
-          "sharedByCharacters": 19,
-          "ofTotal": 31
+          "sharedByCharacters": 16,
+          "ofTotal": 28
         },
         {
           "name": "Mute",
@@ -783,8 +1037,8 @@
           "doubleTap": "Seatbelt Air",
           "score": 350,
           "category": "grab",
-          "sharedByCharacters": 19,
-          "ofTotal": 31
+          "sharedByCharacters": 16,
+          "ofTotal": 28
         },
         {
           "name": "Rock to Fakie",
@@ -797,7 +1051,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Blunt to Fakie",
@@ -809,8 +1063,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -823,7 +1077,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -836,7 +1090,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Axle Stall",
@@ -848,8 +1102,8 @@
           },
           "score": 400,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "FS Nosepick",
@@ -862,7 +1116,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -875,7 +1129,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Disaster",
@@ -888,16 +1142,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Boneless",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
-          "sharedByCharacters": 28,
-          "ofTotal": 31
+          "sharedByCharacters": 25,
+          "ofTotal": 28
         }
       ]
     },
@@ -915,8 +1175,8 @@
           "doubleTap": "360 FS Shove-It",
           "score": 100,
           "category": "flip",
-          "sharedByCharacters": 20,
-          "ofTotal": 31
+          "sharedByCharacters": 17,
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -930,8 +1190,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -945,8 +1205,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -960,7 +1220,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Indy Nosebone",
@@ -974,7 +1234,7 @@
           "score": 350,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Cannonball",
@@ -988,7 +1248,7 @@
           "score": 250,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Wrap Around",
@@ -1002,7 +1262,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Rock to Fakie",
@@ -1015,7 +1275,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Blunt to Fakie",
@@ -1027,8 +1287,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -1041,7 +1301,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -1054,7 +1314,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Axle Stall",
@@ -1066,8 +1326,8 @@
           },
           "score": 400,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "FS Nosepick",
@@ -1080,7 +1340,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -1093,7 +1353,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Disaster",
@@ -1106,16 +1366,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Beanplant",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
           "sharedByCharacters": 3,
-          "ofTotal": 31
+          "ofTotal": 28
         }
       ]
     },
@@ -1134,7 +1400,7 @@
           "score": 100,
           "category": "flip",
           "sharedByCharacters": 11,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -1148,8 +1414,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -1163,8 +1429,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -1178,7 +1444,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Indy Nosebone",
@@ -1192,7 +1458,7 @@
           "score": 350,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Cannonball",
@@ -1206,7 +1472,7 @@
           "score": 250,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Wrap Around",
@@ -1220,7 +1486,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Rock to Fakie",
@@ -1233,7 +1499,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Blunt to Fakie",
@@ -1245,8 +1511,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -1259,7 +1525,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -1272,7 +1538,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Axle Stall",
@@ -1284,8 +1550,8 @@
           },
           "score": 400,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "FS Nosepick",
@@ -1298,7 +1564,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -1311,7 +1577,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Disaster",
@@ -1324,16 +1590,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Beanplant",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
           "sharedByCharacters": 3,
-          "ofTotal": 31
+          "ofTotal": 28
         }
       ]
     },
@@ -1351,8 +1623,8 @@
           "doubleTap": "360 FS Shove-It",
           "score": 100,
           "category": "flip",
-          "sharedByCharacters": 20,
-          "ofTotal": 31
+          "sharedByCharacters": 17,
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -1366,8 +1638,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -1381,8 +1653,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Tailgrab",
@@ -1395,8 +1667,8 @@
           "doubleTap": "One Foot Tailgrab",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -1409,8 +1681,8 @@
           "doubleTap": "Christ Air",
           "score": 450,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Indy",
@@ -1423,8 +1695,8 @@
           "doubleTap": "Stiffy",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Crossbone",
@@ -1437,8 +1709,8 @@
           "doubleTap": "CrookedCop",
           "score": 425,
           "category": "grab",
-          "sharedByCharacters": 19,
-          "ofTotal": 31
+          "sharedByCharacters": 16,
+          "ofTotal": 28
         },
         {
           "name": "Mute",
@@ -1451,8 +1723,8 @@
           "doubleTap": "Seatbelt Air",
           "score": 350,
           "category": "grab",
-          "sharedByCharacters": 19,
-          "ofTotal": 31
+          "sharedByCharacters": 16,
+          "ofTotal": 28
         },
         {
           "name": "Rock to Fakie",
@@ -1465,7 +1737,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Blunt to Fakie",
@@ -1477,8 +1749,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -1491,7 +1763,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -1504,7 +1776,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Axle Stall",
@@ -1516,8 +1788,8 @@
           },
           "score": 400,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "FS Nosepick",
@@ -1530,7 +1802,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -1543,7 +1815,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Disaster",
@@ -1556,16 +1828,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 4,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Boneless",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
-          "sharedByCharacters": 28,
-          "ofTotal": 31
+          "sharedByCharacters": 25,
+          "ofTotal": 28
         }
       ]
     },
@@ -1584,7 +1862,7 @@
           "score": 100,
           "category": "flip",
           "sharedByCharacters": 11,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -1598,8 +1876,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -1613,8 +1891,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -1628,7 +1906,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Indy Nosebone",
@@ -1642,7 +1920,7 @@
           "score": 350,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Cannonball",
@@ -1656,7 +1934,7 @@
           "score": 250,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Wrap Around",
@@ -1670,7 +1948,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -1682,8 +1960,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 27,
-          "ofTotal": 31
+          "sharedByCharacters": 24,
+          "ofTotal": 28
         },
         {
           "name": "Blunt to Fakie",
@@ -1695,8 +1973,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -1708,8 +1986,8 @@
           },
           "score": 550,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Disaster",
@@ -1721,8 +1999,8 @@
           },
           "score": 600,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Axle Stall",
@@ -1734,8 +2012,8 @@
           },
           "score": 400,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "Eggplant",
@@ -1747,8 +2025,8 @@
           },
           "score": 550,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Varial Invert to Fakie",
@@ -1760,8 +2038,8 @@
           },
           "score": 450,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "One Foot Invert",
@@ -1773,17 +2051,23 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Beanplant",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
           "sharedByCharacters": 3,
-          "ofTotal": 31
+          "ofTotal": 28
         }
       ]
     },
@@ -1802,7 +2086,7 @@
           "score": 100,
           "category": "flip",
           "sharedByCharacters": 11,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -1816,8 +2100,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -1831,8 +2115,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -1846,7 +2130,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Indy Nosebone",
@@ -1860,7 +2144,7 @@
           "score": 350,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Cannonball",
@@ -1874,7 +2158,7 @@
           "score": 250,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Wrap Around",
@@ -1888,7 +2172,7 @@
           "score": 450,
           "category": "grab",
           "sharedByCharacters": 6,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -1900,8 +2184,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 27,
-          "ofTotal": 31
+          "sharedByCharacters": 24,
+          "ofTotal": 28
         },
         {
           "name": "Gymnast Plant",
@@ -1914,7 +2198,7 @@
           "score": 575,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "One Foot Invert",
@@ -1927,7 +2211,7 @@
           "score": 500,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Varial Invert to Fakie",
@@ -1940,7 +2224,7 @@
           "score": 450,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -1953,7 +2237,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "FS Noseblunt",
@@ -1966,7 +2250,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Andrecht Invert",
@@ -1979,7 +2263,7 @@
           "score": 550,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "The Switcheroo",
@@ -1992,16 +2276,22 @@
           "score": 600,
           "category": "lip",
           "sharedByCharacters": 9,
-          "ofTotal": 31
+          "ofTotal": 28
         },
         {
           "name": "Boneless",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
-          "sharedByCharacters": 28,
-          "ofTotal": 31
+          "sharedByCharacters": 25,
+          "ofTotal": 28
         }
       ]
     },
@@ -2019,8 +2309,8 @@
           "doubleTap": "360 FS Shove-It",
           "score": 100,
           "category": "flip",
-          "sharedByCharacters": 20,
-          "ofTotal": 31
+          "sharedByCharacters": 17,
+          "ofTotal": 28
         },
         {
           "name": "Ollie Airwalk",
@@ -2034,8 +2324,8 @@
           "doubleTap": "Ollie Airwalk Late Shove-it",
           "score": 500,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Fingerflip",
@@ -2049,8 +2339,8 @@
           "doubleTap": "Double Fingerflip",
           "score": 700,
           "category": "flip",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Tailgrab",
@@ -2063,8 +2353,8 @@
           "doubleTap": "One Foot Tailgrab",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Airwalk",
@@ -2077,8 +2367,8 @@
           "doubleTap": "Christ Air",
           "score": 450,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Indy",
@@ -2091,8 +2381,8 @@
           "doubleTap": "Stiffy",
           "score": 300,
           "category": "grab",
-          "sharedByCharacters": 25,
-          "ofTotal": 31
+          "sharedByCharacters": 22,
+          "ofTotal": 28
         },
         {
           "name": "Crossbone",
@@ -2105,8 +2395,8 @@
           "doubleTap": "CrookedCop",
           "score": 425,
           "category": "grab",
-          "sharedByCharacters": 19,
-          "ofTotal": 31
+          "sharedByCharacters": 16,
+          "ofTotal": 28
         },
         {
           "name": "Mute",
@@ -2119,8 +2409,8 @@
           "doubleTap": "Seatbelt Air",
           "score": 350,
           "category": "grab",
-          "sharedByCharacters": 19,
-          "ofTotal": 31
+          "sharedByCharacters": 16,
+          "ofTotal": 28
         },
         {
           "name": "Invert",
@@ -2132,8 +2422,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 27,
-          "ofTotal": 31
+          "sharedByCharacters": 24,
+          "ofTotal": 28
         },
         {
           "name": "Blunt to Fakie",
@@ -2145,8 +2435,8 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "BS Boneless",
@@ -2158,8 +2448,8 @@
           },
           "score": 550,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Disaster",
@@ -2171,8 +2461,8 @@
           },
           "score": 600,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Axle Stall",
@@ -2184,8 +2474,8 @@
           },
           "score": 400,
           "category": "lip",
-          "sharedByCharacters": 22,
-          "ofTotal": 31
+          "sharedByCharacters": 19,
+          "ofTotal": 28
         },
         {
           "name": "Eggplant",
@@ -2197,8 +2487,8 @@
           },
           "score": 550,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Varial Invert to Fakie",
@@ -2210,8 +2500,8 @@
           },
           "score": 450,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "One Foot Invert",
@@ -2223,17 +2513,23 @@
           },
           "score": 500,
           "category": "lip",
-          "sharedByCharacters": 18,
-          "ofTotal": 31
+          "sharedByCharacters": 15,
+          "ofTotal": 28
         },
         {
           "name": "Boneless",
-          "input": null,
+          "input": {
+            "directions": [
+              "up",
+              "up"
+            ],
+            "button": "jump"
+          },
           "slot": "Jump / boneless slot",
           "score": 250,
           "category": "jump",
-          "sharedByCharacters": 28,
-          "ofTotal": 31
+          "sharedByCharacters": 25,
+          "ofTotal": 28
         }
       ]
     }
@@ -2257,14 +2553,11 @@
           "alsoFactoryDefaultFor": [
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -2314,7 +2607,8 @@
             "Secret Skaters"
           ]
         }
-      ]
+      ],
+      "modelId": "appearance_custom_skater_male"
     },
     {
       "name": "Tony Hawk",
@@ -2382,7 +2676,8 @@
             "THPS Hawk"
           ]
         }
-      ]
+      ],
+      "modelId": "appearance_hawk"
     },
     {
       "name": "Bob Burnquist",
@@ -2440,7 +2735,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_burnquist"
     },
     {
       "name": "Eric Koston",
@@ -2498,7 +2794,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_koston"
     },
     {
       "name": "Bam Margera",
@@ -2556,7 +2853,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_margera"
     },
     {
       "name": "Rodney Mullen",
@@ -2614,7 +2912,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_mullen"
     },
     {
       "name": "Chad Muska",
@@ -2672,7 +2971,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_muska"
     },
     {
       "name": "Ryan Sheckler",
@@ -2718,14 +3018,11 @@
           "alsoFactoryDefaultFor": [
             "Custom Skater",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -2747,7 +3044,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_Sheckler"
     },
     {
       "name": "Mike Vallely",
@@ -2808,7 +3106,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_vallely"
     },
     {
       "name": "Wee-Man",
@@ -2874,7 +3173,8 @@
             "Secret Skaters"
           ]
         }
-      ]
+      ],
+      "modelId": "appearance_weeman"
     },
     {
       "name": "Ben Franklin",
@@ -2907,14 +3207,11 @@
           "alsoFactoryDefaultFor": [
             "Custom Skater",
             "Ryan Sheckler",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -2923,10 +3220,11 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_benfranklin"
     },
     {
-      "name": "Jesse James - Vehicle",
+      "name": "Jesse James",
       "trickSet": "PedTricks",
       "specials": [
         {
@@ -2939,10 +3237,8 @@
             "button": "lip-grind"
           },
           "score": 4250,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Jesse James - Skater"
-          ]
+          "signature": true,
+          "alsoFactoryDefaultFor": []
         },
         {
           "name": "McTwist",
@@ -2959,13 +3255,10 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Skater",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -2974,58 +3267,21 @@
             "Chainsaw Skater"
           ]
         }
-      ]
-    },
-    {
-      "name": "Jesse James - Skater",
-      "trickSet": "PedTricks",
-      "specials": [
-        {
-          "name": "Hot Rod",
-          "input": {
-            "directions": [
-              "down",
-              "up"
-            ],
-            "button": "lip-grind"
-          },
-          "score": 4250,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Jesse James - Vehicle"
-          ]
-        },
-        {
-          "name": "McTwist",
-          "input": {
-            "directions": [
-              "right",
-              "down"
-            ],
-            "button": "grab"
-          },
-          "score": 5000,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Custom Skater",
-            "Ryan Sheckler",
-            "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
-            "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
-            "Shrimp Vendor",
-            "Minikart Driver",
-            "Nigel Beaverhausen",
-            "Jester",
-            "VooDoo",
-            "Chainsaw Skater"
-          ]
+      ],
+      "profiles": [
+        "Vehicle",
+        "Skater"
+      ],
+      "modelId": "Ped_segwayrider",
+      "vehicle": {
+        "id": "segway_params",
+        "tricks": {
+          "jump": "Jump It",
+          "trick": "One Footer",
+          "trick2": "BarSpin",
+          "grind": "Grind It"
         }
-      ]
+      }
     },
     {
       "name": "Bull Fighter",
@@ -3059,13 +3315,10 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Jesse James",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3074,10 +3327,11 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_bullfighter"
     },
     {
-      "name": "Steve-O - Vehicle",
+      "name": "Steve-O",
       "trickSet": "PedTricks",
       "specials": [
         {
@@ -3090,10 +3344,8 @@
             "button": "lip-grind"
           },
           "score": null,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Steve-O - Skater"
-          ]
+          "signature": true,
+          "alsoFactoryDefaultFor": []
         },
         {
           "name": "McTwist",
@@ -3110,13 +3362,10 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Skater",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3125,58 +3374,21 @@
             "Chainsaw Skater"
           ]
         }
-      ]
-    },
-    {
-      "name": "Steve-O - Skater",
-      "trickSet": "PedTricks",
-      "specials": [
-        {
-          "name": "Bite Board",
-          "input": {
-            "directions": [
-              "left",
-              "up"
-            ],
-            "button": "lip-grind"
-          },
-          "score": null,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Steve-O - Vehicle"
-          ]
-        },
-        {
-          "name": "McTwist",
-          "input": {
-            "directions": [
-              "right",
-              "down"
-            ],
-            "button": "grab"
-          },
-          "score": 5000,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Custom Skater",
-            "Ryan Sheckler",
-            "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
-            "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
-            "Shrimp Vendor",
-            "Minikart Driver",
-            "Nigel Beaverhausen",
-            "Jester",
-            "VooDoo",
-            "Chainsaw Skater"
-          ]
+      ],
+      "profiles": [
+        "Vehicle",
+        "Skater"
+      ],
+      "modelId": "Ped_mechbull",
+      "vehicle": {
+        "id": "mechbull_params",
+        "tricks": {
+          "jump": "Jump",
+          "trick": "Yee Haw!",
+          "trick2": "Bull flip",
+          "grind": "Grind"
         }
-      ]
+      }
     },
     {
       "name": "Graffiti Tagger",
@@ -3210,13 +3422,10 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Steve-O",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3225,10 +3434,11 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_graffitiSkater"
     },
     {
-      "name": "Paulie - Vehicle",
+      "name": "Paulie",
       "trickSet": "PedTricks",
       "specials": [
         {
@@ -3241,10 +3451,8 @@
             "button": "lip-grind"
           },
           "score": 4000,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Paulie - Skater"
-          ]
+          "signature": true,
+          "alsoFactoryDefaultFor": []
         },
         {
           "name": "McTwist",
@@ -3261,13 +3469,10 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Skater",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3276,58 +3481,21 @@
             "Chainsaw Skater"
           ]
         }
-      ]
-    },
-    {
-      "name": "Paulie - Skater",
-      "trickSet": "PedTricks",
-      "specials": [
-        {
-          "name": "Paulie Butt Manual",
-          "input": {
-            "directions": [
-              "up",
-              "down"
-            ],
-            "button": "lip-grind"
-          },
-          "score": 4000,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Paulie - Vehicle"
-          ]
-        },
-        {
-          "name": "McTwist",
-          "input": {
-            "directions": [
-              "right",
-              "down"
-            ],
-            "button": "grab"
-          },
-          "score": 5000,
-          "signature": false,
-          "alsoFactoryDefaultFor": [
-            "Custom Skater",
-            "Ryan Sheckler",
-            "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
-            "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
-            "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Shrimp Vendor",
-            "Minikart Driver",
-            "Nigel Beaverhausen",
-            "Jester",
-            "VooDoo",
-            "Chainsaw Skater"
-          ]
+      ],
+      "profiles": [
+        "Vehicle",
+        "Skater"
+      ],
+      "modelId": "paulie_full",
+      "vehicle": {
+        "id": "wheelchair_params",
+        "tricks": {
+          "jump": "Chair Hop",
+          "trick": "One Hander",
+          "trick2": "Sit Flip",
+          "grind": "Chair Grind"
         }
-      ]
+      }
     },
     {
       "name": "Shrimp Vendor",
@@ -3361,14 +3529,11 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Minikart Driver",
             "Nigel Beaverhausen",
             "Jester",
@@ -3376,7 +3541,8 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_ShrimpVendor"
     },
     {
       "name": "Minikart Driver",
@@ -3397,14 +3563,11 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Nigel Beaverhausen",
             "Jester",
@@ -3412,7 +3575,17 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "MiniKartGuy",
+      "vehicle": {
+        "id": "minikart_params",
+        "tricks": {
+          "jump": "Jump",
+          "trick": "Toe Hang",
+          "trick2": "Flip",
+          "grind": "Grind"
+        }
+      }
     },
     {
       "name": "Nigel Beaverhausen",
@@ -3446,14 +3619,11 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Jester",
@@ -3461,7 +3631,8 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Nigel_Costume"
     },
     {
       "name": "Jester",
@@ -3495,14 +3666,11 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3510,7 +3678,8 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_jester"
     },
     {
       "name": "VooDoo",
@@ -3531,14 +3700,11 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3546,7 +3712,17 @@
             "Chainsaw Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_witchdoctor",
+      "vehicle": {
+        "id": "tricycle_params",
+        "tricks": {
+          "jump": "Jump",
+          "trick": "Superman Seatgrab",
+          "trick2": "BarSpin",
+          "grind": "Grind"
+        }
+      }
     },
     {
       "name": "Chainsaw Skater",
@@ -3567,14 +3743,11 @@
             "Custom Skater",
             "Ryan Sheckler",
             "Ben Franklin",
-            "Jesse James - Vehicle",
-            "Jesse James - Skater",
+            "Jesse James",
             "Bull Fighter",
-            "Steve-O - Vehicle",
-            "Steve-O - Skater",
+            "Steve-O",
             "Graffiti Tagger",
-            "Paulie - Vehicle",
-            "Paulie - Skater",
+            "Paulie",
             "Shrimp Vendor",
             "Minikart Driver",
             "Nigel Beaverhausen",
@@ -3582,7 +3755,30 @@
             "VooDoo"
           ]
         }
-      ]
+      ],
+      "modelId": "Ped_Bigfoot",
+      "board": {
+        "id": "chainsaw_params",
+        "tricks": {
+          "jump": "Ollie",
+          "trick": "Grab Trick",
+          "trick2": "Fliptrick",
+          "grind": "Chainsaw Grind",
+          "airTricks": [
+            {
+              "button": "grab",
+              "name": "Hairy Foot Grab",
+              "score": 400
+            },
+            {
+              "button": "flip",
+              "name": "Bigfoot Flip",
+              "score": 100
+            }
+          ]
+        },
+        "source": "confirmed in-game"
+      }
     },
     {
       "name": "THPS Hawk",
@@ -3650,7 +3846,8 @@
             "Tony Hawk"
           ]
         }
-      ]
+      ],
+      "modelId": "appearance_thps_hawk"
     },
     {
       "name": "The Hand",
@@ -3686,7 +3883,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_hand"
     },
     {
       "name": "Shrek",
@@ -3718,7 +3916,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_shrek"
     },
     {
       "name": "C.o.D. Soldier",
@@ -3767,7 +3966,8 @@
           "signature": true,
           "alsoFactoryDefaultFor": []
         }
-      ]
+      ],
+      "modelId": "appearance_COD"
     },
     {
       "name": "Eric Sparrow",
@@ -3833,7 +4033,8 @@
             "Secret Skaters"
           ]
         }
-      ]
+      ],
+      "modelId": "appearance_sparrow"
     },
     {
       "name": "Secret Skaters",
@@ -3896,7 +4097,8 @@
             "Custom Skater"
           ]
         }
-      ]
+      ],
+      "modelId": "appearance_sparrow"
     }
   ],
   "grinds": {
