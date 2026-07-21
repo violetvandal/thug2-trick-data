@@ -550,6 +550,20 @@
           "ofTotal": 28
         },
         {
+          "name": "Japan",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Japan",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 12,
+          "ofTotal": 28
+        },
+        {
           "name": "Madonna",
           "input": {
             "directions": [
@@ -786,6 +800,20 @@
           "score": 300,
           "category": "grab",
           "sharedByCharacters": 22,
+          "ofTotal": 28
+        },
+        {
+          "name": "Japan",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Japan",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 12,
           "ofTotal": 28
         },
         {
@@ -1251,6 +1279,20 @@
           "ofTotal": 28
         },
         {
+          "name": "Japan",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Japan",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 12,
+          "ofTotal": 28
+        },
+        {
           "name": "Wrap Around",
           "input": {
             "directions": [
@@ -1472,6 +1514,20 @@
           "score": 250,
           "category": "grab",
           "sharedByCharacters": 6,
+          "ofTotal": 28
+        },
+        {
+          "name": "Japan",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Japan",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 12,
           "ofTotal": 28
         },
         {
@@ -1937,6 +1993,20 @@
           "ofTotal": 28
         },
         {
+          "name": "Japan",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Japan",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 12,
+          "ofTotal": 28
+        },
+        {
           "name": "Wrap Around",
           "input": {
             "directions": [
@@ -2158,6 +2228,20 @@
           "score": 250,
           "category": "grab",
           "sharedByCharacters": 6,
+          "ofTotal": 28
+        },
+        {
+          "name": "Japan",
+          "input": {
+            "directions": [
+              "up-left"
+            ],
+            "button": "grab"
+          },
+          "doubleTap": "One Foot Japan",
+          "score": 350,
+          "category": "grab",
+          "sharedByCharacters": 12,
           "ofTotal": 28
         },
         {

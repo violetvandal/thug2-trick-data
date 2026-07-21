@@ -13,6 +13,38 @@ only caught by checking against the game.
 import collections
 import re
 
+# Neversoft QB name checksum, ported verbatim from the NeverScript fork
+# (compiler/checksums.go StringToChecksum): CRC32 with poly 0xedb88320, init
+# 0xffffffff, NO final XOR, over the lowercased identifier with '/' -> '\'.
+# We need it to resolve slot values the decompiler left as a bare `#hhhhhhhh`
+# because the referenced name was registered in a DIFFERENT script file. See
+# _checksum_index below for the one slot in the whole corpus that hits this.
+_CRC_TABLE = []
+for _n in range(256):
+    _c = _n
+    for _ in range(8):
+        _c = (0xedb88320 ^ (_c >> 1)) if (_c & 1) else (_c >> 1)
+    _CRC_TABLE.append(_c & 0xffffffff)
+
+
+def _ns_checksum(identifier):
+    rc = 0xffffffff
+    for ch in identifier.encode('latin1', 'ignore'):
+        if 65 <= ch <= 90:          # to lower
+            ch += 32
+        if ch == 0x2f:              # '/' -> '\'
+            ch = 0x5c
+        rc = _CRC_TABLE[(rc ^ ch) & 0xff] ^ ((rc >> 8) & 0x00ffffff)
+    return rc & 0xffffffff
+
+
+def _checksum_str(value):
+    """How the decompiler prints a stored checksum: the four raw little-endian
+    bytes in file order (decompiler.go line 355, `#%02x%02x%02x%02x`)."""
+    return '#%02x%02x%02x%02x' % (value & 0xff, (value >> 8) & 0xff,
+                                  (value >> 16) & 0xff, (value >> 24) & 0xff)
+
+
 MAP_LABELS = {
     'CustomTricks': 'Custom Skater', 'HawkTricks': 'Tony Hawk',
     'KostonTricks': 'Eric Koston', 'MargeraTricks': 'Bam Margera',
@@ -107,6 +139,24 @@ class Names:
             re.findall(r'\bName\s*=\s*%?"([^"]+)"',
                        corpus.get('scripts/game/skater/grindscripts', ''))))
         self._norm = {re.sub(r'[^a-z0-9]', '', n.lower()): n for n in self.all_grind_names}
+        # Printed-checksum -> trick id, so a slot the decompiler could only render
+        # as `#hhhhhhhh` (name registered in another file) still resolves. We index
+        # both the full 32-bit checksum and its 24-bit-masked form: the one live
+        # case, Air_CircleUL grab, is stored as StringToChecksum('Trick_Japan')
+        # masked to 24 bits (0x20f7893e -> 0x00f7893e -> "#3e89f700"), verified in
+        # game to be Japan / One Foot Japan. Full form is preferred over masked so
+        # an exact hit always wins over a masked coincidence.
+        self._cksum = {}
+        for tid in defs:
+            full = _ns_checksum(tid)
+            self._cksum.setdefault(_checksum_str(full), tid)
+        for tid in defs:
+            masked = _ns_checksum(tid) & 0x00ffffff
+            self._cksum.setdefault(_checksum_str(masked), tid)
+
+    def by_checksum(self, printed):
+        """Resolve a bare `#hhhhhhhh` slot value to a trick id, or None."""
+        return self._cksum.get(printed.strip().lower())
 
     def get(self, tid):
         tid = (tid or '').strip()
@@ -312,8 +362,11 @@ def _build_loadout(sets, names, mapping, slot_input, cat_of, special_slot):
     otherwise overwrite each other, wrongly evicting Kickflip from the baseline."""
     rows = {}
     for slot, tid in _resolve(sets, mapping).items():
-        if tid.startswith('#'):          # #xxxxxxxx = an empty slot
-            continue
+        if tid.startswith('#'):          # a checksum the decompiler left unnamed
+            resolved = names.by_checksum(tid)
+            if not resolved:             # genuinely orphan -> nothing to bind
+                continue
+            tid = resolved
         inp = slot_input(slot) or SLOT_INPUTS.get(slot.lower())
         label = special_slot.get(slot.lower())
         if not inp and not label:
