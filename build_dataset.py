@@ -677,6 +677,12 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
 
     # Tricks triggered straight off the ground rather than through a slot, so they
     # appear in no binding table. No Comply is the notable one.
+    #   Jumptricks0 = [{Trigger={PressAndRelease, Up, X}  Scr=NoComply}]  single tap
+    #   Jumptricks  = [{Trigger={TapTwiceRelease, Up, X}  TrickSlot=JumpSlot}] DOUBLE
+    # Both are Up+X off the ground; the difference is the DIRECTION tapped once vs
+    # twice (not the button). So No Comply's double-tap is the jump slot, entered
+    # by tapping Up twice -- and the jump slot is character-assignable, so name the
+    # default (Custom Skater's) and note who differs.
     ground = corpus.get('scripts/game/skater/groundtricks', '')
     ground_tricks = []
     seen_ground = set()
@@ -692,6 +698,29 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
             'input': {'directions': [dirname.get(m.group(1)[0].upper(), m.group(1))],
                       'button': 'jump'},
         })
+
+    def _jump_row(m):
+        for r in loadouts.get(m, {}).values():
+            if r.get('slot') == special_slot.get('jumpslot'):
+                return r
+        return None
+
+    default_jump = _jump_row('CustomTricks')
+    if default_jump:
+        alt = collections.defaultdict(list)   # jump-slot name -> characters, non-default
+        for m in loadouts:
+            r = _jump_row(m)
+            if r and r['name'] != default_jump['name']:
+                alt[r['name']].extend(by_mapping.get(m, []))
+        note = 'the jump slot, entered by tapping the direction twice'
+        if alt:
+            note += '; ' + '; '.join('%s for %s' % (n, ', '.join(sorted(cs)))
+                                     for n, cs in sorted(alt.items()))
+        for g in ground_tricks:
+            if g['name'] == 'No Comply':
+                g['doubleTap'] = default_jump['name']
+                g['doubleTapInput'] = fmt(default_jump['input'])
+                g['doubleTapNote'] = note
     chars_out = []
     for c in characters:
         sp = []

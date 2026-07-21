@@ -188,7 +188,16 @@
             "up"
           ],
           "button": "jump"
-        }
+        },
+        "doubleTap": "Boneless",
+        "doubleTapInput": {
+          "directions": [
+            "up",
+            "up"
+          ],
+          "button": "jump"
+        },
+        "doubleTapNote": "the jump slot, entered by tapping the direction twice; Beanplant for Bam Margera, Bob Burnquist, Rodney Mullen"
       }
     ]
   },
