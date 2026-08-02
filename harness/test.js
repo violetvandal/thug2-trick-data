@@ -1,5 +1,6 @@
-const {JSDOM}=require('jsdom'), fs=require('fs');
-const html=fs.readFileSync('thug2-tricks.html','utf8');
+const {JSDOM}=require('jsdom'), fs=require('fs'), path=require('path');
+// Resolved against this file rather than the shell's cwd, so it runs anywhere.
+const html=fs.readFileSync(path.join(__dirname,'standalone-page.html'),'utf8');
 const dom=new JSDOM('<!doctype html><html><body>'+html+'</body></html>',{runScripts:'dangerously'});
 const d=dom.window.document;
 const SEC=['sec-loadout','sec-specials','sec-pool','sec-extras','sec-manual','sec-grindsys','sec-grindnames'];

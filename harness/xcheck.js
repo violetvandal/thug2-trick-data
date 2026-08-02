@@ -1,7 +1,12 @@
-const {JSDOM}=require('jsdom'), fs=require('fs');
-const dom=new JSDOM('<!doctype html><html><body>'+fs.readFileSync('thug2-tricks.html','utf8')+'</body></html>',{runScripts:'dangerously'});
+const {JSDOM}=require('jsdom'), fs=require('fs'), path=require('path');
+// Paths resolve against this file rather than the shell's cwd, so it runs anywhere.
+const page=path.join(__dirname,'standalone-page.html');
+const dom=new JSDOM('<!doctype html><html><body>'+fs.readFileSync(page,'utf8')+'</body></html>',{runScripts:'dangerously'});
 const d=dom.window.document, w=dom.window;
-const raw=JSON.parse(fs.readFileSync('skaters.json','utf8'));
+// The roster is read straight from the dataset, so the page is always compared
+// against the current source of truth instead of a stale side-car copy.
+const raw=JSON.parse(fs.readFileSync(
+  path.join(__dirname,'..','data','thug2-tricks.json'),'utf8')).characters;
 const sel=d.getElementById('sk-filter');
 let fail=0, totalRendered=0;
 function t(n,c,e){console.log((c?'PASS  ':'FAIL  ')+n+(c?'':'   -> '+e));if(!c)fail++;}

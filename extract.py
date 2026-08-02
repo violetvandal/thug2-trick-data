@@ -68,10 +68,16 @@ def load(workdir):
 def parse_defs(corpus):
     """Every `Name = {...}` / `Name = [...]` block that carries a display name.
 
-    Two traps live here, both found by checking output against in-game menus:
+    Three traps live here, all found by checking output against in-game menus:
       * the key is `name=` in air/ground tricks but `Name=` in lip tricks
       * a block can set ExtraTricks TWICE; the game uses the LAST one
         (Trick_Benihana -> Sacktap, not Beni Fingerflip)
+      * a double-tap trick names its script in one of TWO shapes. Most spell it
+        out as `Trigger={...} Scr=FlipTrick`, but ten of them fuse trigger and
+        script into a single token, `Trigger_Extra_Grab` / `Trigger_Extra_Flip`,
+        and carry no `Scr=` at all. Reading only `Scr=` silently drops those ten
+        real, player-facing tricks (BS Shifty, Tuck Knee, 360 Hardflip...), so
+        the fused token is recorded here as `trigger` and treated as equivalent.
     """
     defs = {}
     for src, t in corpus.items():
@@ -85,11 +91,15 @@ def parse_defs(corpus):
             extras = re.findall(r'\bExtraTricks\s*=\s*(\w+)', body, re.I)
             score = re.search(r'\bscore\s*=\s*(\d+)', body, re.I)
             scr = re.search(r'\bScr\s*=\s*(\w+)', body, re.I)
+            # Trigger_Extra_Grab_Tweak is a tweakable grab; the _Tweak suffix
+            # affects how it is held, not what kind of trick it is.
+            trig = re.search(r'\bTrigger_Extra_(Grab|Flip)\b', body, re.I)
             defs.setdefault(tid, {
                 'id': tid, 'name': CLEAN.sub('', name.group(1)).strip(),
                 'score': int(score.group(1)) if score else None,
                 'extra': extras[-1] if extras else None,
                 'scr': scr.group(1) if scr else None,
+                'trigger': trig.group(1).capitalize() if trig else None,
                 'special': bool(re.search(r'\bIsSpecial\b', body)), 'src': src})
     return defs
 

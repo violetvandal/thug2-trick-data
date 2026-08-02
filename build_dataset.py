@@ -796,14 +796,20 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
     for k, v in defs.items():
         if k.lower() in in_pool:
             continue
+        # A double-tap trick declares its script either as `Scr=FlipTrick` or as
+        # a fused `Trigger_Extra_Flip` token with no Scr= at all. Matching only
+        # on Scr= drops the ten tricks that use the fused form.
         if v.get('scr') in ('FlipTrick', 'GrabTrick', 'LipMacro2', 'Manual', 'ManualLink') \
+                or v.get('trigger') in ('Flip', 'Grab') \
                 or v.get('special'):
             # Firefight / Scavenger Hunt tricks are scripted as FlipTricks but only
             # exist inside their mode, so they get their own category rather than
             # sitting in the flip list as mystery entries.
             category = ('mode' if k in mode
                         else 'special' if v.get('special')
-                        else cat.get(v.get('scr'), 'other'))
+                        else cat.get(v.get('scr'))
+                        or {'Flip': 'flip', 'Grab': 'grab'}.get(v.get('trigger'))
+                        or 'other')
             variants.append({
                 'name': clean.sub('', v['name']).strip(),
                 'category': category,
@@ -906,14 +912,37 @@ def assemble(corpus, defs, slot_input, dirname, cat, mode, special_slot, clean):
                        'The Edit Tricks menu builds its list from the global '
                        'ConfigurableTricks array filtered by TrickIsLocked, which is '
                        'save-file unlock state and not character identity.'},
+            {'id': 'eric-sparrow-not-unlockable', 'confidence': 'verified',
+             'detail': 'Eric Sparrow has a complete profile here (full stats, appearance, '
+                       'VallelyTricks and four specials) but is NOT reachable in the PC '
+                       'build, and this is now settled from the scripts rather than '
+                       'inferred from play. A hidden character becomes selectable through '
+                       'one of three routes: an unlock_flag on the profile, a found_flag, '
+                       'or a SKATER_UNLOCKED_* global set from cheats.qb. Sparrow is the '
+                       'only roster entry with NONE of the three: he carries is_hidden, '
+                       'is_locked and not_in_frontend, and no SKATER_UNLOCKED_SPARROW '
+                       'exists anywhere in the corpus (28 such flags do exist, for every '
+                       'other hidden skater). The one place he appears selectable is a '
+                       'developer model-test list in menu/models.qb, alongside entries '
+                       'named "Mystery" and "Doom3". He is listed here because the scripts '
+                       'define him, not because he can be played.'},
             {'id': 'roster-may-exceed-what-is-playable', 'confidence': 'open',
-             'detail': 'master_skater_list is what the PC scripts DEFINE, which is not '
-                       'proven to be what the PC build lets you PLAY. Eric Sparrow has a '
-                       'full profile and four specials here, but did not appear as '
-                       'playable after unlocking every skater in a real PC install '
-                       '(2026-07-19). Some entries may be unused, cut, or carried over '
-                       'from another edition of the game. Treat character and trick '
-                       'availability as unverified until tested in-game.'},
+             'detail': 'master_skater_list is what the PC scripts DEFINE, which is not the '
+                       'same as what the PC build lets you PLAY. Of the 28 entries, Eric '
+                       'Sparrow is the one confirmed unreachable (see '
+                       'eric-sparrow-not-unlockable). The remaining 27 each have a '
+                       'documented unlock route in the scripts, but only the Custom Skater '
+                       'has been hand-checked against the in-game Edit Tricks menu.'},
+            {'id': 'engine-implemented-moves', 'confidence': 'verified',
+             'detail': 'Wallrides, wallplants/wallies, wallpush and skitching are real '
+                       'scoring moves that this dataset does not list, because they have '
+                       'no scripted definition to read: the scripts carry only their '
+                       'animations, their events (Skater_InWallplant, Skater_Skitching) '
+                       'and goal text, while the moves themselves live in THUG2.exe. A '
+                       'sweep for every definition carrying both a display name and a '
+                       'score found 131, none of them a wall trick. The BradyGames guide '
+                       'prints scores for them; those are deliberately not copied in here, '
+                       'since everything in this file comes from the game data itself.'},
             {'id': 'undefined-trick-ids', 'confidence': 'verified',
              'detail': '%d trick IDs are listed in alltricks.qb but have no definition '
                        'anywhere in the game files, so they carry no name, animation or '

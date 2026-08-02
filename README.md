@@ -8,10 +8,10 @@ game's own script files rather than transcribed from menus.
 | | |
 |---|---|
 | Assignable tricks | 186 |
-| Tap variants | 43 |
+| Tap variants | 53 |
 | Grind names | 86 |
-| Characters | 31 |
-| Factory specials | 86 across those characters |
+| Characters | 28 |
+| Factory specials | 80 across those characters |
 
 It also carries the parts no menu shows you: the grind direction table, the manual
 branch tree, and how widely each default binding is shared across the roster.
@@ -35,6 +35,10 @@ Names and double-tap chains were checked against in-game menu captures, and the 
 slots were round-tripped against the source: 86 assignments, zero undecoded slots, zero
 unresolved names, zero type mismatches.
 
+Trick names and base scores were also cross-checked against the tables in the BradyGames
+official strategy guide (2004), which is what turned up the ten double-tap tricks listed
+below. See `harness/xcheck_guide.py`; the guide itself is not included.
+
 ## Known gaps
 
 These are recorded in the `knownGaps` field of the JSON, and they are the most useful
@@ -51,6 +55,16 @@ places to send a correction.
 3. **24 trick IDs are omitted.** They are listed in `alltricks.qb` but have no definition
    anywhere in the game files, so they carry no name, animation or score. They look like
    cut content. Their IDs are listed in `knownGaps` if you want to dig.
+4. **Wall tricks and skitching are missing on purpose.** Wallrides, wallies, wallpush and
+   skitching score points but have no scripted definition to read: the scripts hold only
+   their animations, events and goal text, and the moves themselves live in `THUG2.exe`.
+   The strategy guide prints scores for them; those are not copied in here, because
+   everything in this file comes from the game data itself.
+5. **Eric Sparrow is listed but cannot be played.** He has a complete profile, but he is
+   the only roster entry with no `unlock_flag`, no `found_flag` and no
+   `SKATER_UNLOCKED_*` global, so nothing in the shipped scripts can ever unlock him. He
+   is here because the scripts define him. The other 27 each have a real unlock route,
+   though only the Custom Skater has been hand-checked against the in-game menu.
 
 ## Rebuilding
 
